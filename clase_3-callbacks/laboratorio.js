@@ -22,9 +22,9 @@ const suma = (a, b) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (a === 0 || b === 0) {
-        reject("Operacion innecesaria");
+        reject('Operacion innecesaria');
       } else if (a + b < 0) {
-        reject("La calculadora sólo debe devolver valores positivos");
+        reject('La calculadora sólo debe devolver valores positivos');
       } else {
         resolve(a + b);
       }
@@ -40,9 +40,9 @@ const resta = (a, b) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (a === 0 || b === 0) {
-        reject("Operacion invalida");
+        reject('Operacion invalida');
       } else if (a - b < 0) {
-        reject("La calculadora sólo debe devolver valores positivos");
+        reject('La calculadora sólo debe devolver valores positivos');
       } else {
         resolve(a - b);
       }
@@ -54,9 +54,9 @@ const multi = (a, b) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (a < 0 || b < 0) {
-        reject("La calculadora solo acepta valores positivos");
+        reject('La calculadora solo acepta valores positivos');
       } else if (a * b < 0) {
-        reject("La calculadora sólo debe devolver valores positivos");
+        reject('La calculadora sólo debe devolver valores positivos');
       } else resolve(a * b);
     }, 5123);
   });
@@ -66,7 +66,7 @@ const dividir = (a, b) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (b === 0) {
-        reject("No se pudo resolver la operacion");
+        reject('No se pudo resolver la operacion');
       } else {
         resolve(a / b);
       }
@@ -76,12 +76,12 @@ const dividir = (a, b) => {
 
 const calculos = async () => {
   try {
-    const resultado = await resta(7, 08);
+    const resultado = await resta(7, 8);
     console.log(resultado);
   } catch (error) {
     console.log(error);
   } finally {
-    console.log("Operacion finalizada");
+    console.log('Operacion finalizada');
   }
 };
 
