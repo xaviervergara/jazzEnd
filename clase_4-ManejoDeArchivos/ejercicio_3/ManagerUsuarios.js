@@ -10,55 +10,81 @@
 
 // El método “ConsultarUsuarios” debe poder leer un archivo Usuarios.json y devolver el arreglo correspondiente a esos usuarios
 
-const fs = require("fs");
+const fs = require('fs');
 
 class ManagerUsuarios {
   constructor() {
     this.usuarios = [];
   }
 
-  crearUsuario(nombre, apellido, edad, curso) {
-    const user = { nombre, apellido, edad, curso };
-
+  //tambien se pueden crear metodos asincronos  de esta manera!!
+  async crearUsuario(user) {
+    //validar que esten los campos completos del user para escribir el archivo
+    if (!user.nombre || !user.apellido || !user.edad || !user.curso) {
+      return console.log('Usuario incompleto');
+    }
     this.usuarios.push(user);
 
+    //una vez pusheado, el array se convierte en JSON
     let matrixToJson = JSON.stringify(this.usuarios);
 
-    const addUser = async () => {
-      try {
-        await fs.promises.writeFile("./Usuarios.json", matrixToJson, "utf-8");
-      } catch (error) {
-        console.error("No se pudo escribir el archivo");
-      }
-    };
-    addUser();
+    try {
+      await fs.promises.writeFile('./Usuarios.json', matrixToJson, 'utf-8');
+    } catch (error) {
+      console.error('No se pudo escribir el archivo');
+    }
   }
 
-  consultarUsuarios() {
-    const readUsers = async () => {
-      try {
-        let file = await fs.promises.readFile("./Usuarios.json", "utf-8");
-        let data = JSON.parse(file);
-        console.log(data);
-      } catch (error) {
-        console.error(`No se pudo leer archivo: ${error}`);
-      }
-    };
-    readUsers();
+  async consultarUsuarios() {
+    try {
+      let file = await fs.promises.readFile('./Usuarios.json', 'utf-8');
+      //file va a tener formato JSON, en la linea de abajo lo parseamos a formato objeto
+      let data = JSON.parse(file);
+      //la ejecucion de este metodo, nos consolea el array de objetos
+      console.log(data);
+    } catch (error) {
+      console.error(`No se pudo leer archivo: ${error}`);
+    }
   }
 }
 
-const managerUsuarios = new ManagerUsuarios();
+//ya que es todo asincrono, hacemos especificamente una funcion asincrona
+//para testear la clase ManagerUsuarios. si se prueba sincronicamente quiza
+//no de tiempo a que se ejecute del todo.
+const test = async () => {
+  try {
+    const managerUsuarios = new ManagerUsuarios();
+    //creamos algunos objetos
+    const user1 = {
+      nombre: 'xavier',
+      apellido: 'vergara',
+      edad: 30,
+      curso: 'backend',
+    };
+    const user2 = {
+      nombre: 'francisco',
+      apellido: 'villegas',
+      edad: 20,
+      curso: 'frontend',
+    };
 
-managerUsuarios.crearUsuario("xavier", "vergara", 30, "Backend");
-managerUsuarios.crearUsuario("damian", "gutierrez", 20, "frontEnd");
-managerUsuarios.crearUsuario("morena", "sanchez", 50, "java");
-managerUsuarios.crearUsuario("ariel", "gimenez", 23, "next.js");
-managerUsuarios.crearUsuario("julia", "paez", 20, "Backend");
-managerUsuarios.crearUsuario("damian", "gutierrez", 20, "frontEnd");
-managerUsuarios.crearUsuario("morena", "sanchez", 50, "java");
-managerUsuarios.crearUsuario("ariel", "gimenez", 23, "next.js");
+    const user3 = {
+      nombre: 'rodrigo',
+      apellido: 'paniagua',
+    };
+    //usamos esos objetos de parametro para la funcion de crear usuario
+    await managerUsuarios.crearUsuario(user1);
+    await managerUsuarios.crearUsuario(user2);
+    await managerUsuarios.crearUsuario(user3);
 
-setTimeout(() => {
-  managerUsuarios.consultarUsuarios();
-}, 5000);
+    //obtenemos el array de objetos en formato de objeto normal
+    let data = await managerUsuarios.consultarUsuarios();
+    //data va a ser entonces igual a lo que devuelve el metodo consultarUsuarios()
+    //de esta manera cuando retornamos data, implica el consologueo del array de objetos
+    return data;
+  } catch (error) {
+    console.log(`no se puede realizar la operacion: ${error}`);
+  }
+};
+
+test();
