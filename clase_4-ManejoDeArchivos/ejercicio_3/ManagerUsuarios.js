@@ -73,6 +73,7 @@ const test = async () => {
       apellido: 'paniagua',
     };
     //usamos esos objetos de parametro para la funcion de crear usuario
+    //notesé que aqui debajo se estaejecuntando el metodo crearUsuario()
     await managerUsuarios.crearUsuario(user1);
     await managerUsuarios.crearUsuario(user2);
     await managerUsuarios.crearUsuario(user3);
