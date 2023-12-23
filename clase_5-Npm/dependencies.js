@@ -18,4 +18,4 @@ const llamarPokemon = async (pokemonId) => {
     console.log(`Error de solicitud: ${error}`);
   }
 };
-llamarPokemon(89);
+llamarPokemon(100);

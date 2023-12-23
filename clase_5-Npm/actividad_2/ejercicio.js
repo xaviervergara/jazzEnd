@@ -81,7 +81,7 @@ const test = async () => {
   };
   await userManager.crearUsuario(user1);
 
-  await userManager.validarUsuario('decard', '23');
+  await userManager.validarUsuario('decard', '123');
 };
 
 test();
