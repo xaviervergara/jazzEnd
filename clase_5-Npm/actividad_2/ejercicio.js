@@ -14,9 +14,9 @@ class UserManager {
       }
 
       const { nombre, apellido, username, password } = user;
-      const hash = crypto.createHash('sha256');
-      hash.update(password);
-      const hashedPassword = hash.digest('hex');
+
+      const hashedPassword = this.hashearPassword(password);
+
       const newUser = {
         nombre,
         apellido,
@@ -44,7 +44,9 @@ class UserManager {
       if (!userNameValidation) {
         return console.log(`No se encontro el usuario`);
       }
-      let passwordValidation = data.some((user) => user.password === password);
+      let passwordValidation = data.some(
+        (user) => user.password === this.hashearPassword(password)
+      );
       if (!passwordValidation) {
         return console.log(`La contraseña no coincide`);
       }
@@ -54,6 +56,17 @@ class UserManager {
     } catch (error) {
       console.log(`Error en la validacion: ${error}`);
     }
+  }
+
+  hashearPassword(password) {
+    //se crea el hash con el algoritmo de encriptado "sha256"
+    const hash = crypto.createHash('sha256');
+    //se aplica el algoritmo de encriptado a la password que viene por param
+    hash.update(password);
+    //se obtiene la password hasheada en codigo hexadecimal
+    let hashedPassword = hash.digest('hex');
+    //retornamos la password encriptada
+    return hashedPassword;
   }
 }
 
@@ -68,7 +81,7 @@ const test = async () => {
   };
   await userManager.crearUsuario(user1);
 
-  //   await userManager.validarUsuario('decard', '123');
+  await userManager.validarUsuario('decard', '23');
 };
 
 test();
