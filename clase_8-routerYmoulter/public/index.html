@@ -7,10 +7,10 @@
   </head>
   <body>
     <h1>Bienvenid@!</h1>
-    <!-- <img src="./img/cat.jpg" alt="gatito200" /> -->
+    <img src="./img/cat.jpg" alt="gatito200" />
 
     <h2>Agregar mascota</h2>
-    <form action="/api/pets" method="post">
+    <form action="/api/pets" method="post" enctype="multipart/form-data">
       <!-- NOMBRE -->
       <label for="petName">Nombre:</label>
       <input type="text" name="petName" id="petName" />
@@ -20,6 +20,9 @@
       <!-- GENERO -->
       <label for="petGender">Genero:</label>
       <input type="text" name="petGender" id="petGender" />
+      <!-- IMAGEN -->
+      <label for="file">Imagen:</label>
+      <input type="file" name="file" id="file" />
       <!-- BOTON -->
       <button type="submit">Agregar</button>
     </form>
