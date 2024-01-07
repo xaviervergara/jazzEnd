@@ -7,34 +7,6 @@ class ProductManager {
     this.id = 0;
   }
 
-  // async addProduct(product) {
-  //   try {
-  //     this.id++;
-  //     product.id = this.id;
-  //     if (
-  //       !product.title ||
-  //       !product.description ||
-  //       !product.price ||
-  //       // !product.thumbnail ||
-  //       !product.code ||
-  //       !product.stock
-  //     ) {
-  //       return console.log('Por favor completar todos los campos');
-  //     }
-
-  //     this.products.push(product);
-
-  //     // let arrayToJson = JSON.stringify(this.products);
-
-  //     await fs.promises.writeFile(
-  //       this.path,
-  //       JSON.stringify(this.products),
-  //       'utf-8'
-  //     );
-  //   } catch (error) {
-  //     console.log(`No se pudo escribir el archivo: ${error}`);
-  //   }
-  // }
   async addProduct(product) {
     try {
       this.id++;
@@ -90,26 +62,6 @@ class ProductManager {
       console.log(`Error al traer archivo ${error}`);
     }
   }
-
-  // async updateProduct(id, update) {
-  //   let productsArray = await fs.promises.readFile(this.path, 'utf-8');
-
-  //   let productsArrayToObj = JSON.parse(productsArray);
-
-  //   let productById = productsArrayToObj.find((product) => product.id === id);
-
-  //   let arrayRemove = this.products.filter(
-  //     (product) => product.id !== productById.id
-  //   );
-
-  //   update.id = id;
-
-  //   arrayRemove.push(update);
-
-  //   let arrayToJson = JSON.stringify(arrayRemove);
-
-  //   await fs.promises.writeFile(this.path, arrayToJson, 'utf-8');
-  // }
 
   async updateProduct(id, update) {
     try {
