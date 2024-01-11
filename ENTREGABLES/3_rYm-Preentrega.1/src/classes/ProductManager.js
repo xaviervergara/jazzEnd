@@ -59,7 +59,7 @@ class ProductManager {
 
       return productById;
     } catch (error) {
-      console.log(`Error al traer archivo ${error}`);
+      console.log(`Error al traer producto por Id ${error}`);
     }
   }
 
@@ -122,6 +122,8 @@ class ProductManager {
     await fs.promises.writeFile(this.path, toJson, 'utf-8');
   }
 }
+
+// ____________________
 console.log('Directorio actual:', process.cwd());
 const test = async () => {
   let productManager = new ProductManager('./productos.json');

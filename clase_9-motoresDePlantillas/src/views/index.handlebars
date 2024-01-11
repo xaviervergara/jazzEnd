@@ -1,0 +1,23 @@
+<div
+  style='padding: 1em; text-align: center;  background-color:Wheat; font-size:2em; font-family: monospace;'
+>
+  <p>Hola {{user.firstName}} {{user.lastName}}, bienvenid@ de vuelta!</p>
+
+  <p>Edad: {{user.age}} años</p>
+  <p>Email: {{user.email}}</p>
+  <p>Telefono: {{user.phone}}</p>
+
+  {{#if user.isAdmin}}
+    <h2 class='food'>Menu del día:</h2>
+    {{#each food}}
+      <div style='font-style: italic; background-color:blanchedalmond'>
+        <p class='food'>Plato:{{this.name}}, Precio: {{this.price}}</p>
+
+      </div>
+    {{/each}}
+  {{else}}
+    <h1>No tenés acceso al menú</h1>
+  {{/if}}
+</div>
+
+<script src='js/index.js'></script>
