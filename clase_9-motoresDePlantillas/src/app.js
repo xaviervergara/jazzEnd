@@ -7,6 +7,7 @@ import handlebars from 'express-handlebars';
 //importamos viewsRoutes
 
 import viewsRoutes from './routes/views.routes.js'; //acordarse del .js!!!!
+import usersRoutes from './routes/users.routes.js';
 
 //iniciamos el server
 const app = express();
@@ -42,6 +43,9 @@ app.set('view engine', 'handlebars');
 
 //configuramos la ruta raiz para el router viewsRoutes
 app.use('/', viewsRoutes);
+
+//configuramos la ruta raiz para el router usersRoutes
+app.use('/api/users', usersRoutes);
 
 //app escuchando en puerto 8080
 app.listen(PORT, () => {
