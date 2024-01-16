@@ -1,0 +1,14 @@
+<div>
+  <h1>Hola mundo!</h1>
+  <input type='text' id='inputInfo' /><button id='sendInfo'>Enviar</button>
+  <p id='outputInfo'></p>
+</div>
+
+{{! SOCKET.IO CONFIG DESDE EL CLIENTE }}
+
+{{! Al instalar socket.io se sirve el archivo que vemos en el enlace de abajo. Nosotros utilizamos este archivo
+ que nos proporciona la libreria, para la configuracion de socket.io desde el cliente}}
+<script src='/socket.io/socket.io.js'></script>
+{{! Importamos el index.js, que tambien lo vamos a usar aquí, osea del lado del cliente }}
+{{! Siempre se importa el index.js luego del socket, nunca antes }}
+<script src='js/index.js'></script>
