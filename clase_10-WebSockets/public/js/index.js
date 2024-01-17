@@ -31,12 +31,20 @@ const input = document.getElementById('inputInfo');
 const p = document.getElementById('outputInfo');
 
 //1- cada vez que se hace click en el boton, se emite un mensaje que contiene el valor del input
-//osea lo que tipeamos
+//osea lo que tipeamos y se envia al servidor para que luego este lo envie a todos los clientes
 button.addEventListener('click', (event) =>
   socket.emit('message', input.value)
 );
 
 //3- Escuchamos msj
 
-//recibimos el array de mensajes y lo logueamos
-socket.on('messages', (data) => (p.innerText = data));
+//recibimos el array de mensajes en cada cliente y lo mostramos desde el front al cliente
+socket.on('messages', (data) => {
+  p.innerHTML = `
+      <ul>
+      ${data.map(
+        (ele) => `<li> Id: ${ele.socketId}, Message: ${ele.message} </li>`
+      )}
+      </ul>
+  `;
+});

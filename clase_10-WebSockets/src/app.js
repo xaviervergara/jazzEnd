@@ -77,9 +77,10 @@ socketServer.on('connection', (socket) => {
   //EJERCICIO
 
   //2-Se recibe cada mensaje y se pushea al array "messages", luego enviamos ese array
-  //a todos los clientes
+  //a todos los clientes, en este caso lo enviamos como un objeto con datos que luego
+  //el front usara para mostrar en el cliente, como por ejemplo id de usuario y el mensaje
   socket.on('message', (data) => {
-    messages.push(data);
+    messages.push({ socketId: socket.id, message: data });
     socketServer.emit('messages', messages);
   });
 });
