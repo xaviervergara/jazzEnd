@@ -8,8 +8,6 @@ const productManager = new ProductManager('../../productos.json');
 //instanciamos la ruta
 const viewsRouter = Router();
 
-const personas = [{ nombre: 'xavier', apellido: 'vergara' }];
-
 viewsRouter.get('/', async (req, res) => {
   //   console.log('Directorio actual:', process.cwd());
   try {
@@ -18,6 +16,10 @@ viewsRouter.get('/', async (req, res) => {
   } catch (error) {
     console.error(`Error al renderizar productos: ${error}`);
   }
+});
+
+viewsRouter.get('/realtimeproducts', (req, res) => {
+  res.send({ message: 'Sitio web en construccion' });
 });
 
 export default viewsRouter;

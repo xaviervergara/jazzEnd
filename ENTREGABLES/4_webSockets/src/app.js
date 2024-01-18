@@ -1,3 +1,5 @@
+console.log('directorio desde app.js', process.cwd());
+
 //importamos express
 import express from 'express';
 
@@ -15,6 +17,16 @@ import cartsRouter from './routes/carts.routes.js';
 
 //Importamos viewsRouter
 import viewsRouter from './routes/views.routes.js';
+
+//importamos ProductManager
+import ProductManager from './classes/ProductManager.js';
+
+//Instanciamos ProductManager
+const productManager = new ProductManager('../../productos.json');
+
+//Traer productos
+
+const products = await productManager.getProducts();
 
 //Escuchando en puerto 8080
 const PORT = 8080;
@@ -66,4 +78,6 @@ io.on('connection', (socket) => {
   socket.on('message', (data) => {
     console.log(data);
   });
+
+  socket.emit('realTimeProducts', products);
 });

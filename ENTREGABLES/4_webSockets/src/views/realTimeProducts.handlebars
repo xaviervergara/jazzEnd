@@ -1,0 +1,10 @@
+<!-- Script de Socket.IO -->
+<script src='/socket.io/socket.io.js'></script>
+
+<!-- Script específico para realtimeproducts.handlebars -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => { const socket = io();
+  socket.emit('message', 'hola desde cliente!'); socket.on('realTimeProducts',
+  (data) => { if (data) { console.log(`Datos desde el cliente:`, data); } else {
+  console.log('No se recibieron datos válidos desde el servidor.'); } }); });
+</script>

@@ -46,6 +46,7 @@ class ProductManager {
       return fileParse;
     } catch (error) {
       console.log(`Error al traer archivo ${error}`);
+      throw error;
     }
   }
 
