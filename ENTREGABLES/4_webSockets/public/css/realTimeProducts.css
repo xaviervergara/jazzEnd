@@ -1,0 +1,9 @@
+body {
+  background-color: rgb(30, 32, 36);
+  color: Azure;
+  font-family: monospace;
+}
+
+#productList {
+  font-size: 1.3em;
+}

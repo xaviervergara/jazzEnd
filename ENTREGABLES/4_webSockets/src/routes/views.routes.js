@@ -12,14 +12,14 @@ viewsRouter.get('/', async (req, res) => {
   //   console.log('Directorio actual:', process.cwd());
   try {
     const products = await productManager.getProducts();
-    res.render('home', { products, style: 'index.css' });
+    res.render('home', { products, style: 'home.css' });
   } catch (error) {
     console.error(`Error al renderizar productos: ${error}`);
   }
 });
 
 viewsRouter.get('/realtimeproducts', (req, res) => {
-  res.send({ message: 'Sitio web en construccion' });
+  res.render('realTimeProducts', { style: 'realTimeProducts.css' });
 });
 
 export default viewsRouter;

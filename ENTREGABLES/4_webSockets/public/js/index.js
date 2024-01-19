@@ -2,17 +2,18 @@
 //Todo esto esta en la docu de socket.io
 // Creamos un socket
 
-// const socket = io();
-
-// socket.emit('message', 'hola desde cliente!');
-
-// socket.on('realTimeProducts', (data) => {
-//   if (data) {
-//     console.log(`Datos desde el cliente:`, data);
-//   } else {
-//     console.log('No se recibieron datos válidos desde el servidor.');
-//   }
-// });
-
-// console.log(products);
 // console.log('directorio actual:', process.cwd());
+
+const socket = io();
+
+socket.on('realTimeProducts', (data) => {
+  if (data) {
+    const productList = document.getElementById('productList');
+
+    productList.innerHTML = data
+      .map((product) => `<p>${product.title}: $ ${product.price}</p>`)
+      .join('');
+  } else {
+    console.error('No se recibieron datos del servidor');
+  }
+});
