@@ -79,5 +79,5 @@ io.on('connection', (socket) => {
     console.log(data);
   });
 
-  socket.emit('realTimeProducts', products);
+  io.emit('realTimeProducts', products);
 });
