@@ -1,9 +1,32 @@
-<h1>Listado de productos en tiempo real</h1>
-<div>
-  <ul id='productList'>
+<main>
+  <h1>Listado de productos en tiempo real</h1>
+  <div class='mainContainer'>
+    <div class='formContainer'>
 
-  </ul>
-</div>
+      <form class='formulario' id='addForm'>
+        <label>Nombre:</label>
+        <input type='text' name='title' id='title' />
+        <label>Descripción:</label>
+        <input type='text' name='description' id='description' />
+        <label>SKU:</label>
+        <input type='number' name='code' id='code' />
+        <label>Precio:</label>
+        <input type='number' name='price' id='price' />
+        <label>Disponible:</label>
+        <input type='text' name='available' id='available' />
+        <label>Stock:</label>
+        <input type='number' name='stock' id='stock' />
+        <label>Categoria:</label>
+        <input type='text' name='category' id='category' />
+        <button type='submit'>Agregar</button>
+      </form>
+
+    </div>
+    <div class='listContainer'>
+      <ul id='productList' class='product-list'></ul>
+    </div>
+  </div>
+</main>
 
 {{! instancia de socket.io }}
 <script src='/socket.io/socket.io.js'></script>

@@ -24,10 +24,6 @@ import ProductManager from './classes/ProductManager.js';
 //Instanciamos ProductManager
 const productManager = new ProductManager('../../productos.json');
 
-//Traer productos
-
-const products = await productManager.getProducts();
-
 //Escuchando en puerto 8080
 const PORT = 8080;
 
@@ -75,9 +71,17 @@ const io = new Server(httpServer);
 io.on('connection', (socket) => {
   console.log(`A new client has connected`);
 
+  io.emit('sendProductManager', productManager);
+
   socket.on('message', (data) => {
     console.log(data);
   });
 
-  io.emit('realTimeProducts', products);
+  socket.on('realTimeProducts', async (data) => {
+    await productManager.addProduct(data);
+
+    const products = await productManager.getProducts();
+
+    io.emit('productAdded', products);
+  });
 });

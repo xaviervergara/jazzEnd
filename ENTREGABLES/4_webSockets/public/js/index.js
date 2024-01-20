@@ -6,7 +6,33 @@
 
 const socket = io();
 
-socket.on('realTimeProducts', (data) => {
+let form = document.getElementById('addForm');
+
+form.addEventListener('submit', (event) => {
+  // event.preventDefault();
+
+  let title = document.getElementById('title').value;
+  let description = document.getElementById('description').value;
+  let code = document.getElementById('code').value;
+  let price = document.getElementById('price').value;
+  let available = document.getElementById('available').value;
+  let stock = document.getElementById('stock').value;
+  let category = document.getElementById('category').value;
+
+  const product = {
+    title,
+    description,
+    code,
+    price,
+    available,
+    stock,
+    category,
+  };
+
+  socket.emit('realTimeProducts', product);
+});
+
+socket.on('productAdded', (data) => {
   if (data) {
     const productList = document.getElementById('productList');
 
