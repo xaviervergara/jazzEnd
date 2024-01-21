@@ -4,12 +4,15 @@
 
 // console.log('directorio actual:', process.cwd());
 
+// import axios from 'axios';
+
 const socket = io();
 
-let form = document.getElementById('addForm');
+//FORMULARIO PARA AGREGAR PRODUCTOS
+const addForm = document.getElementById('addForm');
 
-form.addEventListener('submit', (event) => {
-  // event.preventDefault();
+addForm.addEventListener('submit', (event) => {
+  event.preventDefault();
 
   let title = document.getElementById('title').value;
   let description = document.getElementById('description').value;
@@ -32,7 +35,39 @@ form.addEventListener('submit', (event) => {
   socket.emit('realTimeProducts', product);
 });
 
+// FORMULARIO PARA BORRAR PRODUCTOS
+
+const deleteForm = document.getElementById('deleteForm');
+
+deleteForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  let value = document.getElementById('pid').value;
+
+  socket.emit('deleteValue', value);
+});
+
+/////////////////////////////////////////////
 socket.on('productAdded', (data) => {
+  if (data) {
+    const productList = document.getElementById('productList');
+
+    productList.innerHTML = data
+      .map((product) => {
+        let productHtml = '';
+        for (let key in product) {
+          productHtml += `<li><span class="key"> ${key}:</span> <span class='value'>${product[key]}</span></li>`;
+        }
+        productHtml += '<br>';
+        return productHtml;
+      })
+      .join('');
+  } else {
+    console.error('No se recibieron datos del servidor');
+  }
+});
+////////////////////////////////////////////////
+socket.on('deletedProduct', (data) => {
   if (data) {
     const productList = document.getElementById('productList');
 
