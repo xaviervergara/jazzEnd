@@ -67,7 +67,9 @@ let htmlGenerator = (data) => {
   }
 };
 
+//Imprimir lista de productos actualizadas despues de agregar producto
 socket.on('productAdded', (data) => htmlGenerator(data));
 /////////////////////////////////////////////
 
+//Imprimir lista de productos actualizadas despues de eliminar producto
 socket.on('deletedProduct', (data) => htmlGenerator(data));

@@ -74,16 +74,13 @@ io.on('connection', (socket) => {
   //AGREGAR PRODUCTO
   socket.on('realTimeProducts', async (data) => {
     await productManager.addProduct(data);
-
     const products = await productManager.getProducts();
 
     io.emit('productAdded', products);
   });
 
   // ELIMINAR PRODUCTO
-
   socket.on('deleteValue', async (data) => {
-    console.log(`value desde server ${data}`);
     await productManager.deleteProduct(data);
     const products = await productManager.getProducts();
     io.emit('deletedProduct', products);

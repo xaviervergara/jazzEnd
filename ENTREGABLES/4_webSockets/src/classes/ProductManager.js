@@ -4,13 +4,12 @@ class ProductManager {
   constructor(path) {
     this.path = path;
     this.products = [];
-    this.id = 0;
+    // this.id = 0;
   }
 
   async addProduct(product) {
     try {
-      this.id++;
-      product.id = this.id;
+      product.id = Math.floor(Date.now() * Math.random() * 1);
 
       if (
         !product.title ||
