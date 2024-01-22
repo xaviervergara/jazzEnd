@@ -2,8 +2,8 @@
   <h1>Listado de productos en tiempo real</h1>
   <div class='mainContainer'>
     <div class='formContainer'>
-
-      <form class='formulario' id='addForm'>
+      {{! Formulario para agregar producto }}
+      <form class='addForm' id='addForm'>
         <label>Nombre:</label>
         <input type='text' name='title' id='title' />
         <label>Descripción:</label>
@@ -20,20 +20,20 @@
         <input type='text' name='category' id='category' />
         <button type='submit'>Agregar</button>
       </form>
-
+      {{! Formulario para borrar producto }}
+      <form class='deleteForm' id='deleteForm'>
+        <h2>Eliminar producto</h2>
+        <label>Product Id:</label>
+        <input type='number' name='pid' id='pid' />
+        <button type='submit'>Eliminar</button>
+      </form>
     </div>
     <div class='listContainer'>
       <ul id='productList' class='product-list'></ul>
     </div>
   </div>
   <div>
-    <h2>Eliminar producto</h2>
-    <form id='deleteForm'>
 
-      <label>Product Id:</label>
-      <input type='number' name='pid' id='pid' />
-      <button type='submit'>Eliminar</button>
-    </form>
   </div>
 </main>
 

@@ -47,41 +47,27 @@ deleteForm.addEventListener('submit', (event) => {
   socket.emit('deleteValue', value);
 });
 
+//Funcion para generar el html
+let htmlGenerator = (data) => {
+  if (data) {
+    const productList = document.getElementById('productList');
+
+    productList.innerHTML = data
+      .map((product) => {
+        let productHtml = '';
+        for (let key in product) {
+          productHtml += `<li><span class="key"> ${key}:</span> <span class='value'>${product[key]}</span></li>`;
+        }
+        productHtml += '<br>';
+        return productHtml;
+      })
+      .join('');
+  } else {
+    console.error('No se recibieron datos del servidor');
+  }
+};
+
+socket.on('productAdded', (data) => htmlGenerator(data));
 /////////////////////////////////////////////
-socket.on('productAdded', (data) => {
-  if (data) {
-    const productList = document.getElementById('productList');
 
-    productList.innerHTML = data
-      .map((product) => {
-        let productHtml = '';
-        for (let key in product) {
-          productHtml += `<li><span class="key"> ${key}:</span> <span class='value'>${product[key]}</span></li>`;
-        }
-        productHtml += '<br>';
-        return productHtml;
-      })
-      .join('');
-  } else {
-    console.error('No se recibieron datos del servidor');
-  }
-});
-////////////////////////////////////////////////
-socket.on('deletedProduct', (data) => {
-  if (data) {
-    const productList = document.getElementById('productList');
-
-    productList.innerHTML = data
-      .map((product) => {
-        let productHtml = '';
-        for (let key in product) {
-          productHtml += `<li><span class="key"> ${key}:</span> <span class='value'>${product[key]}</span></li>`;
-        }
-        productHtml += '<br>';
-        return productHtml;
-      })
-      .join('');
-  } else {
-    console.error('No se recibieron datos del servidor');
-  }
-});
+socket.on('deletedProduct', (data) => htmlGenerator(data));

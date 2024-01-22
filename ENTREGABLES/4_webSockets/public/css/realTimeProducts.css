@@ -11,15 +11,29 @@ h1 {
   color: Azure;
 }
 
+h2 {
+  color: Azure;
+}
+
 .formContainer {
+  display: flex;
   border: 1px solid white;
   margin: 0.5em;
   width: 50%;
 }
-.formulario {
+.addForm {
   display: flex;
   flex-direction: column;
   padding: 2em;
+  width: 50%;
+}
+.deleteform {
+  border-left: 1px solid white;
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+  width: 50%;
+  margin-bottom: 0;
 }
 
 .listContainer {
