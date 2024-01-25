@@ -11,41 +11,56 @@ const socket = io();
 //FORMULARIO PARA AGREGAR PRODUCTOS
 const addForm = document.getElementById('addForm');
 
-addForm.addEventListener('submit', (event) => {
-  event.preventDefault();
+if (addForm) {
+  addForm.addEventListener('submit', (event) => {
+    event.preventDefault();
 
-  let title = document.getElementById('title').value;
-  let description = document.getElementById('description').value;
-  let code = document.getElementById('code').value;
-  let price = document.getElementById('price').value;
-  let available = document.getElementById('available').value;
-  let stock = document.getElementById('stock').value;
-  let category = document.getElementById('category').value;
+    let title = document.getElementById('title').value;
+    let description = document.getElementById('description').value;
+    let code = document.getElementById('code').value;
+    let price = document.getElementById('price').value;
+    let available = document.getElementById('available').value;
+    let stock = document.getElementById('stock').value;
+    let category = document.getElementById('category').value;
 
-  const product = {
-    title,
-    description,
-    code,
-    price,
-    available,
-    stock,
-    category,
-  };
+    const product = {
+      title,
+      description,
+      code,
+      price,
+      available,
+      stock,
+      category,
+    };
 
-  socket.emit('realTimeProducts', product);
-});
+    socket.emit('realTimeProducts', product);
+
+    // limpiar
+    document.getElementById('title').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('code').value = '';
+    document.getElementById('price').value = '';
+    document.getElementById('available').value = '';
+    document.getElementById('stock').value = '';
+    document.getElementById('category').value = '';
+  });
+}
 
 // FORMULARIO PARA BORRAR PRODUCTOS
 
 const deleteForm = document.getElementById('deleteForm');
 
-deleteForm.addEventListener('submit', (event) => {
-  event.preventDefault();
+if (deleteForm) {
+  deleteForm.addEventListener('submit', (event) => {
+    event.preventDefault();
 
-  let value = document.getElementById('pid').value;
+    let value = document.getElementById('pid').value;
 
-  socket.emit('deleteValue', value);
-});
+    socket.emit('deleteValue', value);
+    //limpiar
+    document.getElementById('pid').value = '';
+  });
+}
 
 //Funcion para generar el html
 let htmlGenerator = (data) => {

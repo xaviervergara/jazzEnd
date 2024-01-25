@@ -20,6 +20,7 @@ petsRouter.get('/', (req, res) => {
 //PUT
 petsRouter.post('/', uploader.single('file'), (req, res) => {
   const pet = req.body;
+  console.log(pet);
   //obtenemos el path del archivo (en la prop path del objeto req.file, se aloja la ruta del archivo)
   //es single, un solo archivo (req.FILE)
   //la ruta va a ser /public/img/nombre de archivo., para sacar la ruta public y que se guarde directamente

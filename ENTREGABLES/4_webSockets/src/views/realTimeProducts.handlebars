@@ -3,7 +3,13 @@
   <div class='mainContainer'>
     <div class='formContainer'>
       {{! Formulario para agregar producto }}
-      <form class='addForm' id='addForm'>
+      <form
+        enctype='application/x-www-form-urlencoded'
+        action='/realtimeproducts'
+        class='addForm'
+        id='addForm'
+        method='post'
+      >
         <label for='title'>Nombre:</label>
         <input type='text' name='title' id='title' />
         <label for='description'>Descripción:</label>

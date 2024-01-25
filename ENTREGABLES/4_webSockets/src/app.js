@@ -42,7 +42,7 @@ app.use(express.static('public'));
 //montaje enrutador products
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
-app.use('', viewsRouter);
+app.use('/', viewsRouter);
 
 //////HANDLEBARS CONFIG//////
 //vamos a setear un motor 'handlebars' y el motor va a ser handlebars.engine()
