@@ -18,9 +18,19 @@ viewsRouter.get('/', async (req, res) => {
     console.error(`Error al renderizar productos: ${error}`);
   }
 });
+
+//EN PROCESO DE IMPLEMENTACION
 /////////////////////////////////
 const arrayProducts = [];
 
+// viewsRouter.post('/realtimeproducts', (req, res) => {
+//   // console.log(req.body);
+//   const products = req.body;
+
+//   arrayProducts.push(products);
+//   console.log(arrayProducts);
+//   res.send({ message: 'producto agregado exitosamente!' });
+// });
 //////////////////////////////////
 
 //VISTA DE LOS PRODUCTOS TIEMPO REAL
@@ -29,15 +39,6 @@ viewsRouter.get('/realtimeproducts', (req, res) => {
     style: 'realTimeProducts.css',
     title: 'Real Time',
   });
-});
-
-viewsRouter.post('/realtimeproducts', (req, res) => {
-  // console.log(req.body);
-  const products = req.body;
-
-  arrayProducts.push(products);
-  console.log(arrayProducts);
-  res.send({ message: 'producto agregado exitosamente!' });
 });
 
 export default viewsRouter;
