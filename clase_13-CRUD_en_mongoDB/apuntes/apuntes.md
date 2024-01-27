@@ -134,12 +134,19 @@ Su sintaxis es:
 
 ## Ejemplos
 
-### not equal
+## Not equal
 ```js 
 colegio> db.estudiantes.find({nombre: {$ne: 'Julian'}})
 //Operador not equal: trae todos menos a julian
 ```
-### or
+
+## Equal
+```js 
+colegio> db.estudiantes.find({nombre: {$eq: 'Julian'}})
+//Operador equal: trae unicamente a aquellos usuarios que tengan por nombre "julian"
+```
+
+## Or
 ````js 
 colegio> db.estudiantes.find({$or: [{edad: 32},{edad: 18}]})
 //Operador or: trae usuarios de 32 o 18 años
@@ -149,23 +156,97 @@ db.usuarios.find({$or: [{ edad: { $gt: 18 } },  { etiqueta: "VIP" }]})
 //pueden cumplir solo una e igual los trae
 
 ````
-### and
+## And
 ```js
 colegio> db.estudiantes.find({$and: [{curso: 6},{sexo:'F'}]})
 //Trae documentos que cumplan las dos condiciones
 ```
-### exists
+## Exists
 ```js
 colegio> db.estudiantes.find({sexo: {$exists: true}})
 //Trae elementos que cuenten con la propiedad "sexo"
 ```
 
-### distinct
+## Distinct
 
 ```js
 colegio> db.estudiantes.distinct('sexo')
 //trae cada uno de los valores diferentes que existen dentro de la propiedad que se busca
 ```
+## Sort
+
+```js
+db.estudiantes.find().sort({nombre: 1})
+//ordena por nombre ascendentemente, osea alfabeticamente, si aplicammos -1 lo hace descendente
+```
+## Proyeccion
+
+```js
+db.estudiantes.find({},{nombre:1, _id:0})
+//Nos trae todos los productos (el primer arg esta vacio), pero solo nos trae el nombre. Con "_id:0" omitimos que nos regrese el id de cada usuario.
+```
+
+```js
+db.estudiantes.find({nombre:{$ne:'Jimena'}},{nombre:1, apellido:1, _id:0})
+//Nos trae solo nombre y apellido de los users not equals al nombre "Jimena". Excluye el id.
+```
+
+```js
+db.estudiantes.find(nombre:{$eq:'Jimena'},{nombre:1, _id:0})
+//Nos trae los usuarios que se llaman jimena, pero solo nos trae el nombre
+```
+
+## Limit
+
+```js
+db.estudiantes.find({}, {nombre:1, apellido:1}).limit(3)
+//Trae los primeros 3 usuarios de la proyeccion
+```
+## Skip
+
+```js
+db.estudiantes.find({}, {nombre:1, apellido:1}).skip(3)
+//Saltea los 3 primeros usuarios y trae el resto. digamos que tenemos 12 usuarios, se saltea los primeros 3 y nos muestra los 9 restantes
+```
+
+## Skip y Limit: Paginacion)
+
+```js
+//Supongamos que tenenmos una page que nos deja ver de a 5 elementos.
+//Al estar en la pagina 1 vamos a ver los primeros 5, al estar en la pagina 2 vamos a omitir esos primeros 5 y a mostrar los 5 siguientes y asi. Por ende, tenemos que multiplicar el skip por el (numero de pagina -1 ) en el que estemos: Si estamos en la pagina 2, multiplicamos 1 x 5, de esta manera skip = 5: nos salteamos 5 productos. Mientras tanto, Limit sigue siendo de 5, es decir, sigue mostrando de 5 en 5.
+
+//pagina 1
+db.estudiantes.find({},{nombre:1, apellido:1}).limit(5)
+
+//pagina 2
+db.estudiantes.find({},{nombre:1, apellido:1}).limit(5).skip(5)
+
+//pagina 3
+db.estudiantes.find({},{nombre:1, apellido:1}).limit(5).skip(10)
+
+```
+
+
+# <span style="color:Goldenrod"> CRUD : U (Update)
+
+### Las operaciones Update se pueden realizar de dos maneras: Actualizar un documento, o actualizar múltiples documentos. 
+
+---
+
+### db.collection.updateOne(query,update,option)
+-  <span style="color:khaki">query:</span> sirve para filtrar qué elementos actualizar (usa los filtros iguales al find)
+-  <span style="color:khaki">update:</span> Apartado para indicar qué actualizar de los documentos que cumplen con el filtro. Update tiene sus propios operadores como $set, $unset, $inc, $rename, $mul, $min, $max
+- <span style="color:khaki"> option:</span> Opciones a tomar en cuenta para la actualización (como upsert, que inserta el valor en caso de que el documento a actualizar ni siquiera exista).
+
+### db.collection.updateMany(query,update,options)
+ #### Actualiza múltiples documentos que cumplan con el criterio. 
+
+---
+```js
+db.estudiantes.updateOne({ _id: ObjectId('65b32541fef457f2792e5810')},{$set: {nombre: 'Alberto'}})
+//En este caso, tomamos un usuario a traves de su id, luego con set, actualizamos el campo nombre
+```
+
 
 <span style="color:Goldenrod"> </span>
 

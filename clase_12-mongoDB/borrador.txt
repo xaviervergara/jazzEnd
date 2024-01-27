@@ -1,46 +1,4 @@
-let array = [
-  {
-    nombre: 'Uriel',
-    apellido: 'Gimenez',
-    curso: 3,
-    edad: 65,
-    correo: 'uriiz@gmail.com',
-    sexo: 'M',
-  },
-  {
-    nombre: 'Micaela',
-    apellido: 'Maebo',
-    curso: 5,
-    edad: 54,
-    correo: 'maeboMic@gmail.com',
-    sexo: 'F',
-  },
-  {
-    nombre: 'Luna',
-    apellido: 'Lozano',
-    curso: 6,
-    edad: 15,
-    correo: 'luluzano@gmail.com',
-    sexo: 'F',
-  },
-  {
-    nombre: 'Ariel',
-    apellido: 'Gutierrez',
-    curso: 4,
-    edad: 32,
-    correo: 'arriTirri@gmail.com',
-    sexo: 'M',
-  },
-  {
-    nombre: 'Jimena',
-    apellido: 'Awada',
-    curso: 2,
-    edad: 18,
-    correo: 'jimiwada@gmail.com',
-    sexo: 'F',
-  },
-  { nombre: 'Lucia', apellido: 'Castro', curso: 6 },
-];
+let array = [{  nombre: 'Uriel',  apellido: 'Gimenez',  curso: 3,  edad: 65,  correo: 'uriiz@gmail.com',  sexo: 'M'},{  nombre: 'Micaela',  apellido: 'Maebo',  curso: 5,  edad: 54,  correo: 'maeboMic@gmail.com',  sexo: 'F'},{  nombre: 'Luna',  apellido: 'Lozano',  curso: 6,  edad: 15,  correo: 'luluzano@gmail.com',  sexo: 'F'},{  nombre: 'Ariel',  apellido: 'Gutierrez',  curso: 4,  edad: 32,  correo: 'arriTirri@gmail.com',  sexo: 'M'},{  nombre: 'Jimena',  apellido: 'Awada',  curso: 2,  edad: 18,  correo: 'jimiwada@gmail.com',  sexo: 'F'},{ nombre: 'Mariano'}];
 
 // nombre
 // apellido
