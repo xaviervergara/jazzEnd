@@ -71,18 +71,18 @@ const io = new Server(httpServer);
 io.on('connection', (socket) => {
   console.log(`A new client has connected`);
 
-  //AGREGAR PRODUCTO
-  socket.on('realTimeProducts', async (data) => {
+  // AGREGAR PRODUCTO
+  socket.on('addProduct', async (data) => {
     await productManager.addProduct(data);
     const products = await productManager.getProducts();
 
-    io.emit('productAdded', products);
+    io.emit('updatedProducts', products);
   });
 
   // ELIMINAR PRODUCTO
   socket.on('deleteValue', async (data) => {
     await productManager.deleteProduct(data);
     const products = await productManager.getProducts();
-    io.emit('deletedProduct', products);
+    io.emit('updatedProducts', products);
   });
 });

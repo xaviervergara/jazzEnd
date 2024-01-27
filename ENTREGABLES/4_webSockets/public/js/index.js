@@ -33,7 +33,7 @@ if (addForm) {
       category,
     };
 
-    socket.emit('realTimeProducts', product);
+    socket.emit('addProduct', product);
 
     // limpiar
     document.getElementById('title').value = '';
@@ -81,10 +81,14 @@ let htmlGenerator = (data) => {
     console.error('No se recibieron datos del servidor');
   }
 };
-
+///////////////////
 //Imprimir lista de productos actualizadas despues de agregar producto
-socket.on('productAdded', (data) => htmlGenerator(data));
-/////////////////////////////////////////////
+// socket.on('productAdded', (data) => htmlGenerator(data));
+// /////////////////////////////////////////////
 
-//Imprimir lista de productos actualizadas despues de eliminar producto
-socket.on('deletedProduct', (data) => htmlGenerator(data));
+// //Imprimir lista de productos actualizadas despues de eliminar producto
+// socket.on('deletedProduct', (data) => htmlGenerator(data));
+/////////////////////
+socket.on('updatedProducts', (data) => {
+  htmlGenerator(data);
+});
