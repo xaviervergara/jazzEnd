@@ -7,3 +7,6 @@ let array = [{  nombre: 'Uriel',  apellido: 'Gimenez',  curso: 3,  edad: 65,  co
 // correo
 // sexo
 // y uno mas con nombre y apellido y curso
+
+let array2 =[{ nombre : "Pablo", edad : 25 },{nombre: "Juan", edad: 22 },{nombre: "Lucia",edad : 25 },{nombre: "Juan", edad: 29 },{nombre: "Fede", edad: 35 }
+]

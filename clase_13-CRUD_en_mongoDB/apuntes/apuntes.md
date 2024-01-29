@@ -209,7 +209,7 @@ db.estudiantes.find({}, {nombre:1, apellido:1}).skip(3)
 //Saltea los 3 primeros usuarios y trae el resto. digamos que tenemos 12 usuarios, se saltea los primeros 3 y nos muestra los 9 restantes
 ```
 
-## Skip y Limit: Paginacion)
+## Skip y Limit: (Paginacion)
 
 ```js
 //Supongamos que tenenmos una page que nos deja ver de a 5 elementos.
@@ -242,12 +242,157 @@ db.estudiantes.find({},{nombre:1, apellido:1}).limit(5).skip(10)
  #### Actualiza múltiples documentos que cumplan con el criterio. 
 
 ---
+
+## Ejemplos:
+
+### Set
 ```js
 db.estudiantes.updateOne({ _id: ObjectId('65b32541fef457f2792e5810')},{$set: {nombre: 'Alberto'}})
 //En este caso, tomamos un usuario a traves de su id, luego con set, actualizamos el campo nombre
 ```
+### Unset
+
+```js
+db.estudiantes.updateOne({ _id: ObjectId('65b32541fef457f2792e5810')},{$unset: {nombre: 1}})
+//En este caso, tomamos un usuario a traves de su id, luego con unset, eliminamos la propiedad: ahora ese user no tiene mas la propiedad nombre
+```
+### Rename
+
+```js
+db.estudiantes.updateOne({_id: ObjectId('65b32541fef457f2792e5810')}, {$rename: {nombre: 'user'}})
+//En este caso con rename, renombramos el nombre de una propiedad anteriormente llamada "nombre", a "user"
+```
+### Inc
+
+```js
+db.estudiantes.updateOne({_id: ObjectId('65b32541fef457f2792e5810')},{$inc: {edad: 5}})
+//En este caso, con "inc" incrementamos la edad del user en 5. El operador Inc no aplica para datos no numericos.
+```
+
+# <span style="color:Goldenrod"> CRUD : D (Delete)
+
+## Nuestra última operación es para eliminar datos, si bien hay muchas variantes de una eliminación, sólo veremos las dos principales.
+
+- <span style="color:khaki"> db.collection.deleteOne({key:val}) :</span> Elimina sólo el primer elemento que cumpla con el criterio, se usa principalmente para encontrar identificadores específicos. Se recomienda no utilizar si somos conscientes de que el valor a buscar no es repetido.
+- <span style="color:khaki"> db.collection.deleteMany({key:val}) :</span>  Elimina todos los documentos que cumplan con el criterio, se usa cuando sabemos que más de un valor va a contar con ese valor y necesitamos hacer una limpieza general.
 
 
-<span style="color:Goldenrod"> </span>
+
+
+
+# <span style="color:IndianRed"> ULTIMO EJERCICIO
+
+# Operaciones con Filtros
+
+1. Listar todos los documentos de la colección clientes ordenados por edad descendente.
+2. Listar el cliente más joven.
+3. Listar el segundo cliente más joven.
+4. Listar los clientes llamados 'Juan'
+5. Listar los clientes llamados 'Juan' que tengan 29 años.
+6. Listar los clientes llamados 'Juan' ó 'Lucia'
+7. Listar los clientes que tengan más de 25 años.
+8. Listar los clientes que tengan 25 años ó menos.
+9. Listar los clientes que NO tengan 25 años.
+10. Listar los clientes que estén entre los 26 y 35 años.
+11. Actualizar la edad de Fede a 36 años, listando y verificando que no aparezca en el último listado.
+12. Actualizar todas las edades de 25 años a 26 años, listando y verificando que aparezcan en el último listado.
+13. Borrar los clientes que se llamen 'Juan' y listar verificando el resultado.
+14. Eliminar además todos los documentos de estudiantes que hayan quedado con algún valor.
+
+
+
+## <span style="color:LimeGreen"> Resuelve
+
+1. 
+```js
+ db.estudiantes.find().sort({edad: -1})
+ //Entrega lista de usuarios con edades descentendes (mayor a menor)
+```
+
+2. 
+```js
+ db.estudiantes.find({edad: {$exists: true}}).sort({edad: 1}).limit(1)
+//Busca el user mas joven
+```
+
+3. 
+```js
+db.estudiantes.find({edad: {$exists: true}}).sort({edad: 1}).limit(1).skip(1)
+//Busca el segundo user mas joven
+```
+
+4. 
+```js
+db.estudiantes.find({nombre: {$eq: 'Juan'}})
+//Lista a todos los users llamados juan
+```
+
+5. 
+```js
+db.estudiantes.find({edad:29, nombre: 'Juan'}) 
+//o bien
+db.estudiantes.find({$and: [{nombre: 'Juan'}, {edad: 29}]})
+//Lista a todos los users llamados juan con edad de 29 años
+```
+
+6. 
+```js
+db.estudiantes.find({$or:[{nombre: 'Juan'}, {nombre: 'Lucia'}]})
+//Lista los usuarios llamados Juan o llamados Lucia
+```
+7. 
+```js
+db.estudiantes.find({edad: {$gt: 25 }})
+//Lista los usuarios de mas de 25 años
+```
+
+8. 
+```js
+db.estudiantes.find({edad: {$lte: 25 }})
+//Lista los usuarios menores o iguales a 25 años
+```
+
+9. 
+```js
+db.estudiantes.find({edad: {$ne: 25 }})
+//Lista a todos los usuarios que no tienen 25 años
+```
+
+10.  
+```js
+db.estudiantes.find({$and: [{edad: {$gte: 26}},{edad: {$lte: 35}}]})
+//Lista a todos los usuarios que esten entre 26 y 35 años
+```
+
+11.  
+```js
+db.estudiantes.updateOne({_id: ObjectId('65b6d8322ebadbb32943457f')}, {$set: {edad:36}})
+//Cambia la edad deL user a 36 años
+```
+
+12.  
+```js
+db.estudiantes.updateMany({edad:25},{$inc: {edad: 1}})
+//Incrementa la edad de todos los usuarios que tenian 25 años en 1
+```
+
+
+13.  
+```js
+db.estudiantes.deleteMany({nombre: 'Juan'})
+//Elimina los usuarios con el nombre Juan
+```
+
+14.  
+```js
+db.estudiantes.drop()
+//Elimina la coleccion estudiantes
+```
+
+
+
+
+
+<span style="color:IndianRed"> </span>
 
 <span style="color:khaki"> </span>
