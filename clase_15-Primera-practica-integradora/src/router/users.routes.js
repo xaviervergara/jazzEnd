@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { userModel } from '../models/users.model.js';
+import { uploader } from '../utils/multer.js';
 
 const usersRoutes = Router();
 
@@ -42,10 +43,11 @@ usersRoutes.get('/:userId', async (req, res) => {
 
 //POST
 
-usersRoutes.post('/', async (req, res) => {
+usersRoutes.post('/', uploader.single('file'), async (req, res) => {
   const user = req.body;
+  const path = req.file.path.split('public').join('');
   try {
-    await userModel.create(user);
+    await userModel.create({ ...user, imagePath: path });
     res.status(201).json({ message: 'User added' });
   } catch (error) {
     console.error(error);

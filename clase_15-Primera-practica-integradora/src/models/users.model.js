@@ -37,6 +37,7 @@ const userSchema = mongoose.Schema({
     //enum sirve para limitar entre los valores que demos como opcion en el array
     enum: ['M', 'F'],
   },
+  imagePath: String,
 });
 
 //primero va el nombre de la coleccion y luego el esquema

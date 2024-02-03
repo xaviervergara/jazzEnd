@@ -1,0 +1,23 @@
+<form action='/api/users' method='post' enctype='multipart/form-data'>
+  <label for=''>Nombre:</label>
+  <input type='text' name='first_name' />
+  <label for=''>Apellido:</label>
+  <input type='text' name='last_name' />
+  <label for=''>Dni:</label>
+  <input type='text' name='dni' />
+  <label for=''>E-mail:</label>
+  <input type='email' name='email' />
+  <label for=''>Contraseña:</label>
+  <input type='password' name='password' />
+  <label for=''>Fecha de naciemiento:</label>
+  <input type='date' name='birth_date' />
+  <label for=''>Imagen:</label>
+  <input type='file' name='file' />
+  <label for=''>Genero:</label>
+  {{! <input type='text' name='gender' /> }}
+  <select name='gender' id='gender'>
+    <option value='M'>Masculino</option>
+    <option value='F'>Femenino</option>
+  </select>
+  <div class='button-container'><button type='submit'>Add user</button></div>
+</form>
