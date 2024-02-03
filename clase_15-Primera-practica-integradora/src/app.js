@@ -24,17 +24,27 @@ app.set('views', 'src/views');
 app.set('view engine', 'handlebars');
 /////////////////////
 
+// La línea de código que establece la conexión a la base de datos MongoDB a menudo
+// se coloca antes de montar los enrutadores en una aplicación Express porque se desea
+// establecer la conexión a la base de datos antes de que la aplicación empiece a
+// manejar las solicitudes de los enrutadores.
+// Cuando un servidor Node.js Express se inicia, el código se ejecuta de arriba a abajo.
+
+// Si intentaras realizar operaciones de base de datos antes de haber establecido la conexión,
+// podrías encontrarte con errores o comportamientos inesperados, ya que la aplicación no tendría
+// una conexión activa a la base de datos en ese momento.
+
+// CONEXION BASE DE DATOS
+mongoose.connect(
+  'mongodb+srv://xaviervergara00:7bRoXT2dCAi6BNFR@cluster0.tzckbmu.mongodb.net/clase_15'
+);
+
 //Router
 //montaje de las rutas (no olvidar la primer barra '/'api)
 //ruta para api users
 app.use('/api/users', usersRoutes);
 //ruta para views
 app.use('/', viewsRoutes);
-
-//CONEXION BASE DE DATOS
-mongoose.connect(
-  'mongodb+srv://xaviervergara00:7bRoXT2dCAi6BNFR@cluster0.tzckbmu.mongodb.net/clase_15'
-);
 
 app.listen(PORT, () => {
   console.log(`Server runing on port ${PORT}`);
