@@ -1,9 +1,11 @@
 import { Router, urlencoded } from 'express';
 
+import { productModel } from '../DAO/models/products.models.js';
+
 //traemos la clase ProductManager
 import ProductManager from '../DAO/MongoDb/ProductManager.js';
 //instanciamos la clase
-const productManager = new ProductManager('../../productos.json');
+const productManager = new ProductManager();
 
 //instanciamos la ruta
 const viewsRouter = Router();
@@ -13,15 +15,16 @@ viewsRouter.get('/', async (req, res) => {
   //   console.log('Directorio actual:', process.cwd());
   try {
     const products = await productManager.getProducts();
+    // const products = await productModel.find().lean();
     res.render('home', { products, style: 'home.css', title: 'Http Products' });
   } catch (error) {
     console.error(`Error al renderizar productos: ${error}`);
   }
 });
 
-//EN PROCESO DE IMPLEMENTACION
+//EN PROCESO DE IMPLEMENTACION //INCLUIR EL EMIT DIRECTO EN EL POST
 /////////////////////////////////
-const arrayProducts = [];
+// const arrayProducts = [];
 
 // viewsRouter.post('/realtimeproducts', (req, res) => {
 //   // console.log(req.body);

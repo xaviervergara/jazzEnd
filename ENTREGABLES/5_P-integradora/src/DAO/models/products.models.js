@@ -15,16 +15,30 @@ const productSchema = mongoose.Schema({
   },
   price: {
     type: Number,
-    reqired: true,
+    required: true,
   },
   code: {
     type: String,
     required: true,
+    unique: true,
   },
   stock: {
     type: Number,
     required: true,
   },
+  status: {
+    type: Boolean,
+    required: true,
+  },
+  available: {
+    type: String,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  thubmnail: String,
 });
 
 export const productModel = mongoose.model(productCollection, productSchema);

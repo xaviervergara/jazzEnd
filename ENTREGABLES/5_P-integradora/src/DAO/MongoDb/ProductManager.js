@@ -4,17 +4,33 @@ class ProductManager {
   constructor() {}
 
   async addProduct(product) {
+    let { title, description, code, price, available, stock, category } =
+      product;
+    //Si no valido acá cuando trabajo en realTime con socket me crashea el Server
+    if (
+      !title ||
+      !description ||
+      !code ||
+      !price ||
+      !available ||
+      !stock ||
+      !category
+    ) {
+      return console.error(`Constructor error: Completar todos los campos`);
+    }
+
     try {
       await productModel.create(product);
     } catch (error) {
-      console.error(`No se pudo agregar producto a la BD: ${error}`);
+      console.error(`Constructor error: ${error}`);
+      throw error;
     }
   }
 
   async getProducts() {
     try {
       const products = await productModel.find().lean();
-      return products;
+      return products; //caso que este vacio, es un array vacio
     } catch (error) {
       console.error(`No se pudo ingresar a la BD: ${error}`);
       throw error;
@@ -24,17 +40,25 @@ class ProductManager {
   async getProductById(id) {
     try {
       const product = await productModel.findOne({ _id: id }).lean();
+
+      if (!product) {
+        return console.error('Constructor error: No se encontro Id');
+      }
+
       return product;
     } catch (error) {
-      console.error(`Error al traer producto por Id ${error}`);
+      console.error(`Constructor error: ${error}`);
+      throw error;
     }
   }
 
   async updateProduct(id, update) {
     try {
-      await productModel.updateOne({ _id: id }, update);
+      const upd = await productModel.updateOne({ _id: id }, update);
+      return upd;
     } catch (error) {
       console.error(`No se pudo actualizar producto: ${error}`);
+      throw error;
     }
   }
 
@@ -42,15 +66,18 @@ class ProductManager {
     try {
       await productModel.deleteOne({ _id: id });
     } catch (error) {
-      console.error(`Error: no se pudo eliminar el producto: ${error}`);
+      console.error(
+        `Constructor error: no se pudo eliminar el producto: ${error}`
+      );
+      throw error;
     }
   }
 
-  async deleteAll() {
-    this.products = [];
-    let toJson = JSON.stringify(this.products);
-    await fs.promises.writeFile(this.path, toJson, 'utf-8');
-  }
+  // async deleteAll() {
+  //   this.products = [];
+  //   let toJson = JSON.stringify(this.products);
+  //   await fs.promises.writeFile(this.path, toJson, 'utf-8');
+  // }
 }
 
 // ____________________

@@ -89,6 +89,9 @@ io.on('connection', (socket) => {
 
   // ELIMINAR PRODUCTO
   socket.on('deleteValue', async (data) => {
+    if (!data) {
+      return console.error('Socket error: Debe ingresar un Id');
+    }
     await productManager.deleteProduct(data);
     const products = await productManager.getProducts();
     io.emit('updatedProducts', products);
