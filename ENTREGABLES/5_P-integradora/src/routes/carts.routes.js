@@ -24,12 +24,11 @@ cartsRouter.get('/:cid', async (req, res) => {
   const { cid } = req.params;
 
   try {
-    const producById = await cartManager.getCartById(parseInt(cid));
+    const producById = await cartManager.getCartById(cid);
     if (!producById) {
       res.status(400).send({ message: 'Carrito inexistente' });
     }
-
-    res.send({ producById });
+    res.send(producById);
   } catch (error) {
     console.log(`Error peticion get: ${error}`);
   }
@@ -52,14 +51,14 @@ cartsRouter.post('/:cid/product/:pid', async (req, res) => {
   const { cid, pid } = req.params;
   try {
     //VALIDAR QUE EL CARRITO EXISTA EN CART MANAGER
-    const carts = await cartManager.getCarts();
-    const cartId = carts.find((cart) => cart.id === +cid);
-    if (!cartId) {
-      return res
-        .status(400)
-        .send({ message: 'Error en peticion: cartId no inexistente' });
-    }
-    const prodId = await productManager.getProductById(+pid);
+    // const carts = await cartManager.getCarts();
+    // const cartId = carts.find((cart) => cart.id === +cid);
+    // if (!cartId) {
+    //   return res
+    //     .status(400)
+    //     .send({ message: 'Error en peticion: cartId no inexistente' });
+    // }
+    const prodId = await productManager.getProductById(pid);
     //VALIDAR QUE EL PRODUCTO EXISTA EN PRODUCT MANAGER
     if (!prodId) {
       return res
