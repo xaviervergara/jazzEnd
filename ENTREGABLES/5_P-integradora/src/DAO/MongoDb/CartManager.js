@@ -33,31 +33,31 @@ class CartManager {
     }
   }
 
-  // async addProductToCart(pid, cid) {
-  //   try {
-  //     const updatedCart = await cartModel.findOneAndUpdate(
-  //       //filter
-  //       { _id: cid },
-  //       //update
-  //       {
-  //         $inc: { 'products.$[elem].quantity': 1 },
-  //         $setOnInsert: { _id: cid },
-  //       },
-  //       //options
-  //       {
-  //         arrayFilters: [{ 'elem.product': pid }],
-  //         upsert: true,
-  //         new: true,
-  //       }
-  //     );
+  async addProductToCart(pid, cid) {
+    try {
+      const updatedCart = await cartModel.findOneAndUpdate(
+        //filter
+        { _id: cid },
+        //update
+        {
+          $inc: { 'products.$[elem].quantity': 1 },
+          $setOnInsert: { _id: cid },
+        },
+        //options
+        {
+          arrayFilters: [{ 'elem.product': pid }],
+          upsert: true,
+          new: true,
+        }
+      );
 
-  //     if (!updatedCart) {
-  //       console.error('Constructor error: Could add update cart');
-  //     }
-  //   } catch (error) {
-  //     console.log(`Error al actualizar carrito: ${error}`);
-  //   }
-  // }
+      if (!updatedCart) {
+        console.error('Constructor error: Could add update cart');
+      }
+    } catch (error) {
+      console.log(`Error al actualizar carrito: ${error}`);
+    }
+  }
   // NUEVA
   // async addProductToCart(pid, cid) {
   //   try {
