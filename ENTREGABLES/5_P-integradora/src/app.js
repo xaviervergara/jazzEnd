@@ -23,6 +23,10 @@ import viewsRouter from './routes/views.routes.js';
 // importamos ProductManager (MongoDB)
 import ProductManager from './DAO/MongoDb/ProductManager.js';
 
+// Importamos el esquema de mensajes (chatApp)
+
+import { messageModel } from './DAO/models/messages.models.js';
+
 // Instanciamos ProductManager
 const productManager = new ProductManager('../../productos.json');
 
@@ -76,6 +80,8 @@ const httpServer = app.listen(PORT, () =>
 // instanciamos un nuevo servidor web socket de la clase Server que importamos de socket.io
 const io = new Server(httpServer);
 
+// const messages = [];
+
 io.on('connection', (socket) => {
   console.log(`A new client has connected`);
 
@@ -95,5 +101,17 @@ io.on('connection', (socket) => {
     await productManager.deleteProduct(data);
     const products = await productManager.getProducts();
     io.emit('updatedProducts', products);
+  });
+  /////////////////CHAT APP//////////////////
+  socket.on('message', async (data) => {
+    // messages.push(data);
+    await messageModel.create({ data });
+    io.emit('messageLogs', data);
+  });
+
+  socket.on('newUser', async (user) => {
+    await messageModel.create({ user });
+    io.emit('userLog', user);
+    socket.broadcast.emit('notification', user);
   });
 });

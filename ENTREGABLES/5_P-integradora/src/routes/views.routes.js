@@ -22,6 +22,13 @@ viewsRouter.get('/', async (req, res) => {
   }
 });
 
+//////////////CHAT APP/////////////////
+viewsRouter.get('/chat', (req, res) => {
+  res.render('chat', {
+    title: 'Chat app',
+    style: 'chat.css',
+  });
+});
 //EN PROCESO DE IMPLEMENTACION //INCLUIR EL EMIT DIRECTO EN EL POST
 /////////////////////////////////
 // const arrayProducts = [];
