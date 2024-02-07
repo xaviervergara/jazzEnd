@@ -80,7 +80,7 @@ const httpServer = app.listen(PORT, () =>
 // instanciamos un nuevo servidor web socket de la clase Server que importamos de socket.io
 const io = new Server(httpServer);
 
-// const messages = [];
+const messages = [];
 
 io.on('connection', (socket) => {
   console.log(`A new client has connected`);
@@ -104,13 +104,13 @@ io.on('connection', (socket) => {
   });
   /////////////////CHAT APP//////////////////
   socket.on('message', async (data) => {
-    // messages.push(data);
-    await messageModel.create({ data });
+    await messageModel.create({ user: data.user, message: data.data });
+    messages.push(data);
+
     io.emit('messageLogs', data);
   });
 
-  socket.on('newUser', async (user) => {
-    await messageModel.create({ user });
+  socket.on('newUser', (user) => {
     io.emit('userLog', user);
     socket.broadcast.emit('notification', user);
   });
