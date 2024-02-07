@@ -107,7 +107,7 @@ io.on('connection', (socket) => {
     await messageModel.create({ user: data.user, message: data.data });
     messages.push(data);
 
-    io.emit('messageLogs', data);
+    io.emit('messageLogs', messages);
   });
 
   socket.on('newUser', (user) => {
