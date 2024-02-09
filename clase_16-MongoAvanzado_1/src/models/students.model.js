@@ -25,7 +25,7 @@ const studentSchema = mongoose.Schema({
       {
         course: {
           type: mongoose.Schema.ObjectId,
-          ref: 'courses',
+          ref: 'courses', //refe para que se conecte al modelo de courses
         },
       },
     ],
@@ -40,5 +40,11 @@ const studentSchema = mongoose.Schema({
 //     {course: ObjectId('123123123')},
 //     {course: ObjectId('123123123')},
 // ]
+
+//Con este middleware por defecto se muestra el population son tener que hacer .populate en el metodo find en el get
+//se usa function() porque necesitamos el this que en este caso hace referencia al schema
+studentSchema.pre('find', function () {
+  this.populate('courses.course');
+});
 
 export const studentModel = mongoose.model(studentCollection, studentSchema);

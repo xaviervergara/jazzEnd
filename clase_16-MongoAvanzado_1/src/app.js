@@ -19,13 +19,13 @@ const PORT = 8080;
 // Instanciamos la app
 const app = express();
 
-// Recibimos json
-app.use(express.json());
-
 // Antes de la ruta nos conectamos a la BD
 mongoose.connect(
   'mongodb+srv://xaviervergara00:7bRoXT2dCAi6BNFR@cluster0.tzckbmu.mongodb.net/coder'
 );
+
+// Recibimos json
+app.use(express.json());
 
 //Montaje en ruta api/users
 app.use('/api/users', usersRoutes);
