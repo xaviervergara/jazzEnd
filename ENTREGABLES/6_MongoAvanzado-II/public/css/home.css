@@ -1,0 +1,19 @@
+body {
+  background-color: rgb(30, 32, 36);
+  font-family: monospace;
+}
+
+h1 {
+  font-size: 3em;
+  color: Azure;
+}
+
+ul {
+  list-style-type: none;
+  font-size: 1.3em;
+  color: Azure;
+}
+
+.label {
+  color: Brown;
+}

@@ -22,6 +22,7 @@ const studentSchema = mongoose.Schema({
   },
   courses: {
     type: [
+      //esto significa que es de tipo array
       {
         course: {
           type: mongoose.Schema.ObjectId,
@@ -41,7 +42,7 @@ const studentSchema = mongoose.Schema({
 //     {course: ObjectId('123123123')},
 // ]
 
-//Con este middleware por defecto se muestra el population son tener que hacer .populate en el metodo find en el get
+//Con este middleware por defecto se muestra el population sin tener que hacer .populate en el metodo find en el get
 //se usa function() porque necesitamos el this que en este caso hace referencia al schema
 studentSchema.pre('find', function () {
   this.populate('courses.course');
