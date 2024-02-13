@@ -27,7 +27,7 @@ class ProductManager {
     }
   }
 
-  async getProducts() {
+  async getProducts(limit, page, query, sort) {
     try {
       const products = await productModel.find().lean();
       return products; //caso que este vacio, es un array vacio

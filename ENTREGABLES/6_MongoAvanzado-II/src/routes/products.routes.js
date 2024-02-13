@@ -10,7 +10,7 @@ const productManager = new ProductManager();
 
 // GET /(CON LIMIT)
 productsRouter.get('/', async (req, res) => {
-  const { limit } = req.query;
+  const { limit, page, query, sort } = req.query;
 
   try {
     const products = await productManager.getProducts();
