@@ -8,36 +8,33 @@ const productsRouter = express.Router();
 //Instanciamos la clase
 const productManager = new ProductManager();
 
-// GET /(CON LIMIT)
+//████████████████████████████████████████
+//█                                      █
+//█              GET+LIMIT               █
+//█                                      █
+//████████████████████████████████████████
+
 productsRouter.get('/', async (req, res) => {
-  const { limit, page, query, sort } = req.query;
+  const { limit = 10, page = 1, query = '', sort = '' } = req.query;
 
   try {
-    const products = await productManager.getProducts();
+    const products = await productManager.getProducts(limit, page, query, sort);
 
-    //si no hay limit manda todo
-    if (!limit) {
-      return res.send({ products });
+    if (products) {
+      res.send({ products });
+    } else {
+      res.status(400).send({ message: 'Products not found' });
     }
-    //si el limit es mas grande tira eror
-    if (+limit > products.length || +limit < 0) {
-      return res.status(400).json({ message: 'Error: cantidad inexistente' });
-    }
-    //si pasan string: si se parsea string a entero da NaN, entonces..
-    if (isNaN(+limit)) {
-      return res
-        .status(400)
-        .json({ message: 'Limit debe tener valor numerico' });
-    }
-    const limitedProd = products.slice(0, parseInt(limit));
-
-    res.send({ limitedProd });
   } catch (error) {
     res.status(400).send({ message: error });
   }
 });
 
-// GET /(CON PARAM ID)
+//████████████████████████████████████████
+//█                                      █
+//█              GET+PARAM               █
+//█                                      █
+//████████████████████████████████████████
 
 productsRouter.get('/:pid', async (req, res) => {
   const { pid } = req.params;
@@ -50,7 +47,12 @@ productsRouter.get('/:pid', async (req, res) => {
   }
 });
 
-//POST
+//████████████████████████████████████████
+//█                                      █
+//█                POST                  █
+//█                                      █
+//████████████████████████████████████████
+
 productsRouter.post('/', async (req, res) => {
   //DUDA: PARA QUE VALIDAR ACA? PORQUE NO SE HACE TODO EN LA CLASE
   let { title, description, code, price, available, stock, category } =
@@ -84,7 +86,11 @@ productsRouter.post('/', async (req, res) => {
   }
 });
 
-//PUT
+//████████████████████████████████████████
+//█                                      █
+//█                PUT                   █
+//█                                      █
+//████████████████████████████████████████
 
 productsRouter.put('/:pid', async (req, res) => {
   const { pid } = req.params;
@@ -106,7 +112,11 @@ productsRouter.put('/:pid', async (req, res) => {
   }
 });
 
-// DELETE
+//████████████████████████████████████████
+//█                                      █
+//█               DELETE                 █
+//█                                      █
+//████████████████████████████████████████
 
 productsRouter.delete('/:pid', async (req, res) => {
   const { pid } = req.params;
@@ -143,3 +153,9 @@ productsRouter.delete('/:pid', async (req, res) => {
 export default productsRouter;
 
 // console.log('Directorio actual:', process.cwd());
+
+//████████████████████████████████████████
+//█                                      █
+//█                PUT                   █
+//█                                      █
+//████████████████████████████████████████

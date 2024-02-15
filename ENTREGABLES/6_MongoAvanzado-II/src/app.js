@@ -90,7 +90,7 @@ io.on('connection', (socket) => {
     await productManager.addProduct(data);
     const products = await productManager.getProducts();
 
-    io.emit('updatedProducts', products);
+    io.emit('updatedProducts', products.docs); //ojo con esto, trabajando con paginate, recibimos distinto el obj y hay que ir a docs
   });
 
   // ELIMINAR PRODUCTO
@@ -100,7 +100,7 @@ io.on('connection', (socket) => {
     }
     await productManager.deleteProduct(data);
     const products = await productManager.getProducts();
-    io.emit('updatedProducts', products);
+    io.emit('updatedProducts', products.docs);
   });
   /////////////////CHAT APP//////////////////
   socket.on('message', async (data) => {

@@ -1,4 +1,8 @@
+//importamos mongoose
 import mongoose from 'mongoose';
+
+//importamos paginaete
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 //nombre de la coleccion
 const productCollection = 'products';
@@ -39,5 +43,7 @@ const productSchema = mongoose.Schema({
   },
   thubmnail: String,
 });
+
+productSchema.plugin(mongoosePaginate);
 
 export const productModel = mongoose.model(productCollection, productSchema);
