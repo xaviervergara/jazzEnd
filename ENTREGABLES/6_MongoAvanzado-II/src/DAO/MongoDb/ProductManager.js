@@ -4,9 +4,7 @@ class ProductManager {
   constructor() {}
 
   //████████████████████████████████████████
-  //█                                      █
   //█              ADD PRODUCT             █
-  //█                                      █
   //████████████████████████████████████████
 
   async addProduct(product) {
@@ -24,7 +22,7 @@ class ProductManager {
     ) {
       return console.error(`Constructor error: Completar todos los campos`);
     }
-
+    product.status = true;
     try {
       await productModel.create(product);
     } catch (error) {
@@ -34,9 +32,7 @@ class ProductManager {
   }
 
   //████████████████████████████████████████
-  //█                                      █
   //█              GET PRODUCT             █
-  //█                                      █
   //████████████████████████████████████████
 
   async getProducts(limit = 10, page = 1, query = '', sort = '') {
@@ -52,10 +48,15 @@ class ProductManager {
         {
           limit,
           page,
-          sort: sort ? { precio: sort } : {},
+          sort: sort ? { price: sort } : {}, //sort acepta asc, desc, ascending, descending.
         }
       );
-      return products; //.docs; //caso que este vacio, es un array vacio
+
+      //los products que vienen en products.docs se los pasamos a la nueva prop "payload" y eliminamos la prop docs que los contenia asi no repetimos todos los productos de nuevo
+      products.payload = products.docs;
+      delete products.docs;
+
+      return { status: 'Ok', ...products }; //.docs;
     } catch (error) {
       console.error(`No se pudo ingresar a la BD: ${error}`);
       throw error;
@@ -63,9 +64,7 @@ class ProductManager {
   }
 
   //████████████████████████████████████████
-  //█                                      █
   //█              GET BY ID               █
-  //█                                      █
   //████████████████████████████████████████
 
   async getProductById(id) {
@@ -84,9 +83,7 @@ class ProductManager {
   }
 
   //████████████████████████████████████████
-  //█                                      █
   //█             UPDATE PRODUCT           █
-  //█                                      █
   //████████████████████████████████████████
 
   async updateProduct(id, update) {
@@ -100,9 +97,7 @@ class ProductManager {
   }
 
   //████████████████████████████████████████
-  //█                                      █
   //█             DELETE PRODUCT           █
-  //█                                      █
   //████████████████████████████████████████
 
   async deleteProduct(id) {

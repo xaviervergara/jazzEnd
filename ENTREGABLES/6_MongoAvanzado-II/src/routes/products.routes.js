@@ -9,9 +9,7 @@ const productsRouter = express.Router();
 const productManager = new ProductManager();
 
 //████████████████████████████████████████
-//█                                      █
 //█              GET+LIMIT               █
-//█                                      █
 //████████████████████████████████████████
 
 productsRouter.get('/', async (req, res) => {
@@ -21,7 +19,7 @@ productsRouter.get('/', async (req, res) => {
     const products = await productManager.getProducts(limit, page, query, sort);
 
     if (products) {
-      res.send({ products });
+      res.send(products);
     } else {
       res.status(400).send({ message: 'Products not found' });
     }
@@ -31,9 +29,7 @@ productsRouter.get('/', async (req, res) => {
 });
 
 //████████████████████████████████████████
-//█                                      █
 //█              GET+PARAM               █
-//█                                      █
 //████████████████████████████████████████
 
 productsRouter.get('/:pid', async (req, res) => {
@@ -48,9 +44,7 @@ productsRouter.get('/:pid', async (req, res) => {
 });
 
 //████████████████████████████████████████
-//█                                      █
 //█                POST                  █
-//█                                      █
 //████████████████████████████████████████
 
 productsRouter.post('/', async (req, res) => {
@@ -87,9 +81,7 @@ productsRouter.post('/', async (req, res) => {
 });
 
 //████████████████████████████████████████
-//█                                      █
 //█                PUT                   █
-//█                                      █
 //████████████████████████████████████████
 
 productsRouter.put('/:pid', async (req, res) => {
@@ -113,9 +105,7 @@ productsRouter.put('/:pid', async (req, res) => {
 });
 
 //████████████████████████████████████████
-//█                                      █
 //█               DELETE                 █
-//█                                      █
 //████████████████████████████████████████
 
 productsRouter.delete('/:pid', async (req, res) => {
@@ -155,7 +145,5 @@ export default productsRouter;
 // console.log('Directorio actual:', process.cwd());
 
 //████████████████████████████████████████
-//█                                      █
 //█                PUT                   █
-//█                                      █
 //████████████████████████████████████████
