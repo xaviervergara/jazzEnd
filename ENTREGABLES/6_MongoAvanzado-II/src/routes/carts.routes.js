@@ -50,14 +50,6 @@ cartsRouter.post('/:cid/product/:pid', async (req, res) => {
   console.log('Directorio actual:', process.cwd()); //TIRAR ESTA LINEA PARA UBICARSE EN DIRECTORIO
   const { cid, pid } = req.params;
   try {
-    //VALIDAR QUE EL CARRITO EXISTA EN CART MANAGER
-    // const carts = await cartManager.getCarts();
-    // const cartId = carts.find((cart) => cart.id === +cid);
-    // if (!cartId) {
-    //   return res
-    //     .status(400)
-    //     .send({ message: 'Error en peticion: cartId no inexistente' });
-    // }
     const prodId = await productManager.getProductById(pid);
     //VALIDAR QUE EL PRODUCTO EXISTA EN PRODUCT MANAGER
     if (!prodId) {
@@ -73,16 +65,22 @@ cartsRouter.post('/:cid/product/:pid', async (req, res) => {
   }
 });
 
-//DELETE ALL
+//████████████████████████████████████████
+//█       DELETE PRODUCT FROM CART       █
+//████████████████████████████████████████
 
-cartsRouter.delete('/', async (req, res) => {
+cartsRouter.delete('/:cId/product/:pId', async (req, res) => {
+  const { cId, pId } = req.params;
   try {
-    await cartManager.deleteAll();
-    res.status(200).send({ message: 'Carritos borrados satisfactoriamente' });
+    const result = await cartManager.deleteProductInCart(cId, pId);
+
+    if (result) {
+      res.send({ message: 'Product deleted from cart' });
+    } else {
+      res.status(400).json({ message: 'Could not delete product' });
+    }
   } catch (error) {
-    console.log(
-      `Error de peticion: error al borrar todos los carritos, ${error}`
-    );
+    console.error(`Error al eliminar producto del carrito: ${error}`);
   }
 });
 

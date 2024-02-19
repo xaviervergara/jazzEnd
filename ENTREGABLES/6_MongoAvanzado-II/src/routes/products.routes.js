@@ -133,13 +133,6 @@ productsRouter.delete('/:pid', async (req, res) => {
   }
 });
 
-// DELETE ALL (MIO)
-
-// productsRouter.delete('/', async (req, res) => {
-//   productManager.deleteAll();
-//   res.send({ message: 'products deleted' });
-// });
-
 export default productsRouter;
 
 // console.log('Directorio actual:', process.cwd());
