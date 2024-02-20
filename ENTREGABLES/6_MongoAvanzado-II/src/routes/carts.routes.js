@@ -1,13 +1,14 @@
 import express from 'express';
 import CartManager from '../DAO/MongoDb/CartManager.js'; //MongoDb
 import ProductManager from '../DAO/MongoDb/ProductManager.js'; //MongoDb
+import mongoose from 'mongoose';
 
 //instanciamos el enrutador
 const cartsRouter = express.Router();
 //Instanciamos la clase del carrito
-const cartManager = new CartManager('../../../carritos.json');
+const cartManager = new CartManager();
 //Instanciamos la clase del productManager
-const productManager = new ProductManager('../../productos.json');
+const productManager = new ProductManager();
 
 //GET
 cartsRouter.get('/', async (req, res) => {

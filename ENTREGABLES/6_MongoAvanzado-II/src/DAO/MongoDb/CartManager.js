@@ -59,15 +59,15 @@ class CartManager {
   ///////////////////////////////////
   async deleteProductInCart(cId, pId) {
     try {
-      //updateOne: 1er Arg: filtro, 2do Arg: que es lo que se quiere actualizar, 3er Arg:
+      //updateOne: 1er Arg: filtro, 2do Arg: que es lo que se quiere actualizar.
       const result = await cartModel.updateOne(
         { _id: cId },
         {
-          $pull: { products: { product: new mongoose.Types.ObjectId(pId) } }, // The  $pull operator removes from an existing array all instances of a value or values that match a specified condition.
+          $pull: { products: { product: pId } }, // The  $pull operator removes from an existing array all instances of a value or values that match a specified condition.
           //new mongoose.Types.ObjectId(pId)-->hay que escribir todo eso para que mongoose entienda el id...
         }
       );
-      console.log(`ACA ESTA RESULT: ${result}`);
+      console.log(`ACA ESTA RESULT: ${result.modifiedCount}`);
       if (result.modifiedCount > 0) {
         //verificamos que se haya modificado el doc
         return true;
