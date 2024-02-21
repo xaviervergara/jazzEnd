@@ -2,10 +2,28 @@ import mongoose from 'mongoose';
 
 const cartCollection = 'carts';
 
+// const cartSchema = mongoose.Schema({
+//   products: {
+//     type: Array,
+//     required: true,
+//     ref: 'products', //=> hacemos referencia a la coleccion products (population)
+//   },
+// });
+
 const cartSchema = mongoose.Schema({
   products: {
-    type: Array,
-    required: true,
+    //Products es tipo array []
+    type: [
+      {
+        product: {
+          type: mongoose.Schema.ObjectId,
+          required: true, //tambien es required
+          ref: 'products', //=> hacemos referencia a la coleccion products (population)
+        },
+        quantity: Number,
+      },
+    ],
+    default: [], //products es un array vacio entonces por defecto
   },
 });
 

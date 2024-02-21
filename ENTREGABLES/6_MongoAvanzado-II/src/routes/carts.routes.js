@@ -85,4 +85,46 @@ cartsRouter.delete('/:cId/product/:pId', async (req, res) => {
   }
 });
 
+//████████████████████████████████████████
+//█             PUT (new prods)          █
+//████████████████████████████████████████
+
+cartsRouter.put('/:cId', async (req, res) => {
+  const { cId } = req.params;
+  const newProds = req.body;
+
+  try {
+    const result = await cartManager.updateCart(cId, newProds);
+    if (result.modifiedCount > 0) {
+      res.send({ message: 'Cart Updated' });
+    } else {
+      res.status(400).send({ message: 'Could not update cart' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(400).send({ message: 'Could not update cart' });
+  }
+});
+
+//████████████████████████████████████████
+//█          PUT (prods quantity)        █
+//████████████████████████████████████████
+
+cartsRouter.put('/:cId/products/:pId', async (req, res) => {
+  const { cId, pId } = req.params;
+  const { quantity } = req.body;
+
+  try {
+    const result = await cartManager.updateProductInCart(cId, pId, quantity);
+    if (result) {
+      res.send({ message: 'Product updated' });
+    } else {
+      res.status(400).send({ message: 'Could not update quantity' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(400).send({ message: 'Could not update quantity' });
+  }
+});
+
 export default cartsRouter;

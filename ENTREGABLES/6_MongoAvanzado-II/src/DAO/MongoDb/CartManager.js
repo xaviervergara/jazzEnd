@@ -4,6 +4,10 @@ import mongoose from 'mongoose';
 class CartManager {
   constructor() {}
 
+  //████████████████████████████████████████
+  //█               GET CARTS              █
+  //████████████████████████████████████████
+
   async getCarts() {
     try {
       const carts = await cartModel.find();
@@ -13,6 +17,10 @@ class CartManager {
     }
   }
 
+  //████████████████████████████████████████
+  //█            GET CART BY ID            █
+  //████████████████████████████████████████
+
   async getCartById(id) {
     try {
       const cartId = await cartModel.findOne({ _id: id });
@@ -21,6 +29,10 @@ class CartManager {
       console.log(`Error al traer carrito: ${error}`);
     }
   }
+
+  //████████████████████████████████████████
+  //█               ADD CART               █
+  //████████████████████████████████████████
 
   async addCart() {
     try {
@@ -33,6 +45,10 @@ class CartManager {
       // return false;
     }
   }
+
+  //████████████████████████████████████████
+  //█           addProductToCart           █
+  //████████████████████████████████████████
 
   async addProductToCart(pid, cid) {
     try {
@@ -56,7 +72,11 @@ class CartManager {
       return false;
     }
   }
-  ///////////////////////////////////
+
+  //████████████████████████████████████████
+  //█       DELETE PRODUCT FROM CART       █
+  //████████████████████████████████████████
+
   async deleteProductInCart(cId, pId) {
     try {
       //updateOne: 1er Arg: filtro, 2do Arg: que es lo que se quiere actualizar.
@@ -74,6 +94,54 @@ class CartManager {
       } else {
         return false;
       }
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
+  //████████████████████████████████████████
+  //█             UPDATE PRODS             █
+  //████████████████████████████████████████
+
+  async updateCart(cId, newProds) {
+    try {
+      const result = await cartModel.updateOne({ _id: cId }, newProds);
+      return result;
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  }
+
+  //████████████████████████████████████████
+  //█             UPDATE PRODS             █
+  //████████████████████████████████████████
+
+  async updateProductInCart(cId, pId, quantity) {
+    console.log(`cantidad desde constructor : ${quantity}`);
+    if (!quantity) {
+      console.error('Must provide "quantity"');
+      return false;
+    }
+    try {
+      const cart = await cartModel.findOne({ _id: cId });
+      if (!cart) {
+        console.error('Cart not found');
+        return false;
+      }
+      const product = cart.products.find(
+        (product) => product.product.toString() === pId
+      ); //product.product porque dentro del objeto product la propiedad que contiene su Id se llama product tambien //y es toString porque el id en el modelo esta como ObjectId
+
+      if (!product) {
+        console.error('Could not find product');
+        return false;
+      }
+      product.quantity += quantity;
+
+      await cart.save(); //una vez que modificamos la cantidad del producto lo guardamos en la bD
+      return true;
     } catch (error) {
       console.error(error);
       return false;
