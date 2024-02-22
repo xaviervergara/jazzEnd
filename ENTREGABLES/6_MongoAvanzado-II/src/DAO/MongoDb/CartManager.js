@@ -23,7 +23,9 @@ class CartManager {
 
   async getCartById(id) {
     try {
-      const cartId = await cartModel.findOne({ _id: id });
+      const cartId = await cartModel
+        .findOne({ _id: id })
+        .populate('products.product'); //population
       return cartId;
     } catch (error) {
       console.log(`Error al traer carrito: ${error}`);
@@ -75,7 +77,7 @@ class CartManager {
 
   //████████████████████████████████████████
   //█       DELETE PRODUCT FROM CART       █
-  //████████████████████████████████████████
+  //████████████████████████████████████████//Elimina un producto del carrito
 
   async deleteProductInCart(cId, pId) {
     try {
@@ -115,7 +117,7 @@ class CartManager {
   }
 
   //████████████████████████████████████████
-  //█             UPDATE PRODS             █
+  //█        UPDATE PRODS quantity         █
   //████████████████████████████████████████
 
   async updateProductInCart(cId, pId, quantity) {
@@ -138,10 +140,29 @@ class CartManager {
         console.error('Could not find product');
         return false;
       }
-      product.quantity += quantity;
+      product.quantity = quantity;
 
       await cart.save(); //una vez que modificamos la cantidad del producto lo guardamos en la bD
       return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
+  //████████████████████████████████████████
+  //█        DELETE ALL PRODS IN CART      █
+  //████████████████████████████████████████//Elimina todos los productos del carrito
+
+  async deleteAllProductsInCart(cId) {
+    try {
+      const deleted = await cartModel.updateOne({ _id: cId }, { products: [] });
+
+      if (deleted.modifiedCount > 0) {
+        return true;
+      } else {
+        return false;
+      }
     } catch (error) {
       console.error(error);
       return false;

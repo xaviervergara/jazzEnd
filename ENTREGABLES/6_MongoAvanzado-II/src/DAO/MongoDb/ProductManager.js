@@ -46,7 +46,7 @@ class ProductManager {
           [key]: value,
         },
         {
-          limit,
+          limit, //sintacticamente sucede: ||limit: 10||, o el numero que pasemos Revisar ES6
           page,
           sort: sort ? { price: sort } : {}, //sort acepta asc, desc, ascending, descending.
         }

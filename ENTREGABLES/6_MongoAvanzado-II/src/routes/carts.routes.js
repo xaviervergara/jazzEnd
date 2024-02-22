@@ -112,7 +112,7 @@ cartsRouter.put('/:cId', async (req, res) => {
 
 cartsRouter.put('/:cId/products/:pId', async (req, res) => {
   const { cId, pId } = req.params;
-  const { quantity } = req.body;
+  const { quantity } = req.body; // esto tiene que estar desestructurado ya que necesitamos la variable "quantity" del objeto body
 
   try {
     const result = await cartManager.updateProductInCart(cId, pId, quantity);
@@ -124,6 +124,25 @@ cartsRouter.put('/:cId/products/:pId', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(400).send({ message: 'Could not update quantity' });
+  }
+});
+
+//████████████████████████████████████████
+//█        DELETE ALL PRODS IN CART      █
+//████████████████████████████████████████
+
+cartsRouter.delete('/:cId', async (req, res) => {
+  const { cId } = req.params;
+
+  try {
+    const deleted = await cartManager.deleteAllProductsInCart(cId);
+    if (deleted) {
+      return res.send({ message: 'Products has been deleted' });
+    } else {
+      return res.status(400).send({ message: 'Could not delete products' });
+    }
+  } catch (error) {
+    console.error(error);
   }
 });
 
