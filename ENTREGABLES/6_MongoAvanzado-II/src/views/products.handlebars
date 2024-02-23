@@ -1,0 +1,31 @@
+<h1>Products</h1>
+
+{{#each products.payload}}
+  <div>
+    <p>Master Id: {{this._id}}</p>
+    <p>Nombre: {{this.title}}</p>
+    <p>Descripción: {{this.description}}</p>
+    <p>Precio: {{this.price}}</p>
+    <p>Sku: {{this.code}}</p>
+    <p>Stock: {{this.stock}}</p>
+    <p>Status: {{this.status}}</p>
+    <p>Disponible: {{this.available}}</p>
+    <p>Categoria: {{this.category}}</p>
+    <button id='{{this._id}}'>Agregar al carrito</button>
+  </div>
+
+{{/each}}
+
+<div>
+  {{#if products.hasPrevPage}}
+    <button><a href='/products?page={{products.prevPage}}'>Anterior</a></button>
+  {{/if}}
+
+  {{#if products.hasNextPage}}
+    <button><a
+        href='/products?page={{products.nextPage}}'
+      >Siguiente</a></button>
+  {{/if}}
+</div>
+
+<script src='js/products.js'></script>

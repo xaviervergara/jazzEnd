@@ -57,9 +57,15 @@ app.use('/api/carts', cartsRouter);
 app.use('/', viewsRouter);
 
 //////HANDLEBARS CONFIG//////
-//vamos a setear un motor 'handlebars' y el motor va a ser handlebars.engine()
+const hbs = handlebars.create({
+  //Crea un nuevo handlebars engine con la opcion "runtimeOptions" que permite envio de propiedades como prototipos
+  runtimeOptions: {
+    allowProtoPropertiesByDefault: true, // Permite pasar props que se consideran prototipos (mongoose tiene estas propiedades que son consideradas como tales. De esta manera nos aseguramos de que handlebars las interprete como tal y las deje pasar)
+  },
+});
+
 //(motor instanciado)
-app.engine('handlebars', handlebars.engine());
+app.engine('handlebars', hbs.engine);
 
 //indicamos donde esta la ruta de las vistas
 app.set('views', 'src/views');

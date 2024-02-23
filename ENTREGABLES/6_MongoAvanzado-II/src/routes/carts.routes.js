@@ -48,6 +48,7 @@ cartsRouter.post('/', async (req, res) => {
 // POST /:cid/product/:pid
 
 cartsRouter.post('/:cid/product/:pid', async (req, res) => {
+  console.log('hola mundo');
   console.log('Directorio actual:', process.cwd()); //TIRAR ESTA LINEA PARA UBICARSE EN DIRECTORIO
   const { cid, pid } = req.params;
   try {

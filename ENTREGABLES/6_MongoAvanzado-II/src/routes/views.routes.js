@@ -22,6 +22,18 @@ viewsRouter.get('/', async (req, res) => {
   }
 });
 
+//Vista /products para la 2nda Pre-entrega
+
+viewsRouter.get('/products', async (req, res) => {
+  const { page } = req.query;
+  try {
+    const products = await productManager.getProducts(10, page); //10 es el limit, page es la pagina
+    res.render('products', { products, style: 'products.css' });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 //////////////CHAT APP/////////////////
 viewsRouter.get('/chat', (req, res) => {
   res.render('chat', {
