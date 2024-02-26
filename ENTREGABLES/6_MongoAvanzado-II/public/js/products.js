@@ -1,4 +1,5 @@
-const buttons = document.getElementsByTagName('button');
+const buttons = document.getElementsByClassName('btn_addToCart');
+// const buttons = document.getElementsByTagName('button');
 
 const addProductToCart = async (pId) => {
   try {
