@@ -1,1 +1,42 @@
-[{"title":"teclado genius","description":"teclado oficina color blanco","code":"199","price":"10","available":"true","stock":"28","category":"tecno","id":557173944115},{"title":"monitor samsung","description":"monitor 24'' color negro","code":"457","price":"100","available":"true","stock":"12","category":"tecno","id":977153991434},{"title":"Placa de audio behringer","description":"Placa de sonido behringer u-phoria","code":"5991","price":"20","available":"true","stock":"10","category":"audio","id":1564995386632},{"title":"Parlante audiotron","description":"parlante 22''","code":"190","price":"50","available":"true","stock":"12","category":"audio","id":98342976598}]
+[
+    {
+        "title": "teclado genius",
+        "description": "teclado oficina color blanco",
+        "code": "199",
+        "price": "10",
+        "available": "true",
+        "stock": "28",
+        "category": "tecno",
+        "id": 557173944115
+    },
+    {
+        "title": "monitor samsung",
+        "description": "monitor 24'' color negro",
+        "code": "457",
+        "price": "100",
+        "available": "true",
+        "stock": "12",
+        "category": "tecno",
+        "id": 977153991434
+    },
+    {
+        "title": "Placa de audio behringer",
+        "description": "Placa de sonido behringer u-phoria",
+        "code": "5991",
+        "price": "20",
+        "available": "true",
+        "stock": "10",
+        "category": "audio",
+        "id": 1564995386632
+    },
+    {
+        "title": "Parlante audiotron",
+        "description": "parlante 22''",
+        "code": "190",
+        "price": "50",
+        "available": "true",
+        "stock": "12",
+        "category": "audio",
+        "id": 98342976598
+    }
+]

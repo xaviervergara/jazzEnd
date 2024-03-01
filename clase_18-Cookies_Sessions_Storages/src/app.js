@@ -1,6 +1,8 @@
 import express from 'express';
 import handlebars from 'express-handlebars';
 import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import { auth } from './middleware/auth.js';
 
 //puerto
 const PORT = 8080;
@@ -16,6 +18,69 @@ app.use(cookieParser('C0d3rh0us3')); //cookie firmada
 
 //public
 app.use(express.static('public'));
+
+//session middleware
+
+app.use(
+  session({
+    secret: 'C0d3rh0us3', //firma
+    resave: true, //guarda igual luego de un periodo de inactividad.
+    saveUninitialized: true, //por mas de que la session este vacia, la guarda igual
+  })
+);
+
+//    ///////////////
+//   ////SESSION////
+//  ///////////////
+
+app.get('/session', (req, res) => {
+  if (req.session.counter) {
+    req.session.counter++;
+    res.send({
+      message: `Hola ${req.session.user} bienvenido de vuelta! Se ha visitado el sitio ${req.session.counter} veces`,
+    });
+  } else {
+    req.session.counter = 1;
+    res.send({ message: `Bienvenido ${req.session.user}! ` });
+  }
+});
+
+//Logout
+
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (!err) {
+      res.send({ message: 'Logout Ok!' });
+    } else {
+      res.status(400).send(err);
+    }
+  });
+});
+
+//login
+
+app.get('/login', (req, res) => {
+  const { userName, password } = req.query; //se hace asi para ser mas agil en la demostracion pero esto se pasa todo por body, porque si se pasa asi se ve por url
+  if (userName !== 'xaviervergara' || password !== 'xv123') {
+    return res
+      .status(401)
+      .send({ message: 'Usuario o contraseña incorrectos' });
+  }
+  req.session.user = userName;
+  req.session.password = password;
+  req.session.admin = true;
+  res.send({ message: 'Login success!' });
+});
+
+//    /////////////////////////
+//   ////HANDLEBARS CONFIG////
+//  /////////////////////////
+
+app.engine('handlebars', handlebars.engine());
+app.set('views', 'src/views');
+app.set('view engine', 'handlebars');
+
+//
 
 //████████████████████████████████████
 //█            SET COOKIES           █
@@ -72,17 +137,13 @@ app.get('/getSignedCookies', (req, res) => {
   res.send(req.signedCookies); //signedCookies es palabra reservada propia de la libreria "cookieParser"
 });
 
-//HANDLEBARS config
+//        ////////////////
+//       /////Render/////
+//      ////////////////
 
-app.engine('handlebars', handlebars.engine());
-app.set('views', 'src/views');
-app.set('view engine', 'handlebars');
-
-//
-
-//Render
-
-app.get('/', (req, res) => {
+//Ejercicio #1
+//le pasamos middleware de autenticacion
+app.get('/', auth, (req, res) => {
   res.render('index');
 });
 
