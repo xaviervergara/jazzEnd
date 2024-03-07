@@ -1,0 +1,91 @@
+* {
+  padding: 0;
+  margin: 0;
+  background-color: rgb(30, 32, 30);
+  color: white;
+  font-family: monospace;
+  list-style-type: none;
+  text-decoration: none;
+}
+
+h1 {
+  margin: 0.3em;
+  color: white;
+  text-align: center;
+  font-size: 3em;
+}
+
+.user_bienvenida {
+  margin: 0.3em;
+  color: white;
+  text-align: center;
+}
+
+.product_container {
+  margin: 1.3em;
+  /* border: 1px solid white; */
+  padding: 0.5em;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.281);
+}
+
+.keyValue_container {
+  display: flex;
+  margin-bottom: 0.5em;
+  font-size: 1.2em;
+}
+
+.product_key {
+  font-weight: bold;
+  color: rgb(248, 158, 41);
+  margin-right: 0.5em;
+}
+
+.btn_addToCart {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.3em;
+  color: black;
+  cursor: pointer;
+  /* background-color: rgba(255, 255, 255, 0.281); */
+  background-color: rgb(4, 138, 4);
+  border-radius: 5px;
+}
+
+.logoutBtn_container {
+  display: flex;
+  justify-content: end;
+}
+
+#logoutBtn {
+  padding: 0.5em;
+  margin-right: 1.3em;
+  border-radius: 8px;
+  font-size: 1.2em;
+  cursor: pointer;
+  background-color: rgb(248, 158, 41);
+  color: black;
+}
+
+.btn_page {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.3em;
+  background-color: rgb(202, 202, 202);
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  border-radius: 5px;
+}
+
+.btnPage_container {
+  display: flex;
+  justify-content: center;
+  margin: 1.3em;
+}
+
+.link_page {
+  margin: 0;
+  padding: 0;
+  background-color: rgb(202, 202, 202);
+  color: black;
+  /* background-color: rgba(255, 255, 255, 0.281); */
+}
