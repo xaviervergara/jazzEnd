@@ -7,5 +7,3 @@ export const createHash = (password) =>
 // COMPARAR PASS HASHEADA CON LA PASS QUE SE PASA POR EL FRONTEND
 export const isValidPassword = (user, password) =>
   bcrypt.compareSync(password, user.password); // esta funcion devuelve un boolean.
-
-//NOTESE QUE NO TIENEN LLAVE ESTAS FUNCIONES. SI LLEGAN A TENER LLAVES HAY QUE PONERLES EL RETURN ANTES DEL BCRYPT

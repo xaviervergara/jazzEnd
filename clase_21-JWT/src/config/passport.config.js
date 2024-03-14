@@ -2,6 +2,7 @@ import passport from 'passport';
 import local from 'passport-local';
 import { userModel } from '../models/user.model.js';
 import { createHash, isValidPassword } from '../utils/bcrypt.js';
+import { Strategy as GithubStrategy } from 'passport-github2';
 
 // PASSPORT NOS SIRVE PARA CENTRALIZAR TODA LA LOGICA DE AUTENTICACIONES, (EN UN SITIO GRANDE HAY MAS DE UN TIPO DE AUTENTICACION)
 // HACIENDO QUE QUEDE TODO EN ESTE ARCHIVO Y SE MANEJE TODO DESDE AQUI AHORRANDONOS TENER QUE HACER LA LOGICA EN CADA ENDPOINT ;)
@@ -63,6 +64,40 @@ const initializePassport = () => {
             return done(null, false);
           }
           return done(null, user); //una vez que pasa el usuario, se va req, y se va con el nombre que le hayamos puesto en este done(), en este caso "user" de modo que = req.user
+        } catch (error) {
+          return done(error);
+        }
+      }
+    )
+  );
+
+  //LOGIN GITHUB
+
+  passport.use(
+    'github',
+    new GithubStrategy(
+      {
+        clientID: 'Iv1.3789cee2521a5f6c',
+        callbackURL: 'http://localhost:8080/api/sessions/githubcallback',
+        clientSecret: '2b882cc1aa2c7bee25eb43732d0a97941feaa759',
+      }, //chequear docu oficial de passport-github2
+      async (accessToken, refreshToken, profile, done) => {
+        try {
+          console.log({ profile });
+
+          const user = await userModel.findOne({ email: profile._json.email }); //profile viene de github, dentro tiene el obj "_json" y dentro de este tiene el email
+          if (!user) {
+            const newUser = {
+              first_name: profile._json.name.split(' ')[0], //divimos por espacio, nos quedamos con nombre [0] y apellido [1] si tiene mas de un nombre cagamos. otra solucion es sacar el required del campo last_name en el model, que de hecho hicimos eso porque si no tiene apellido tambien cagamos
+              last_name: profile._json.name.split(' ')[1], //last name no viene en github, el nombre viene todo entero en 'profile._json.name'
+              age: 18, //age no viene en github, aqui ponemos un random porque no es de relevancia
+              email: profile._json.email, // en este caso cada usuario deberia configurar su email en github para que aparezca como publico. otra forma es que en vez de que se logueen con el email lo hagan con el username(email: profile.username)(siempre consologuear profile para ver como vienen los datos!)
+              password: 'GithubGenerated', // no viene en github, ponemos "GithubGenerated" para tener de referencia de que se inicio sesion con github
+            };
+            const result = await userModel.create(newUser);
+            return done(null, result);
+          }
+          return done(null, user); // aqui si el usuario ya existe se lo pasamos. Este es el user que obtuvimos del userModel.findOne({ email: profile._json.email })
         } catch (error) {
           return done(error);
         }
